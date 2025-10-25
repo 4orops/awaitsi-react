@@ -28,9 +28,9 @@ const Services = ({ services }) => {
               <p className="text-gray-600 mb-4">
                 {service.description}
               </p>
-              <div className="text-lime-600 font-semibold text-lg">
+              {/* <div className="text-lime-600 font-semibold text-lg">
                 {service.price}
-              </div>
+              </div> */}
             </div>
           ))}
         </div>
