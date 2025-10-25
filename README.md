@@ -4,7 +4,7 @@ Building Technology with Heart, for Generations to Come.
 
 ## About Awaitsi
 
-Awaitsi is a family-owned South African technology company specializing in:
+Awaitsi is a family-oriented South African technology company specializing in:
 - Web Development
 - Mobile Applications
 - CRM Solutions
