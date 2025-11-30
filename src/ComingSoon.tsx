@@ -18,9 +18,24 @@ const ComingSoon: React.FC = () => {
     seconds: 0
   });
 
+
+  const containerRef = React.useRef<HTMLDivElement>(null);
   const launchDate = new Date('2026-03-02T00:00:00'); // March 2, 2026
 
   useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      if (containerRef.current) {
+        const { clientX, clientY } = event;
+        const { innerWidth, innerHeight } = window;
+        const x = (clientX / innerWidth) * 2 - 1;
+        const y = (clientY / innerHeight) * 2 - 1;
+        containerRef.current.style.setProperty('--mouse-x', `${x}`);
+        containerRef.current.style.setProperty('--mouse-y', `${y}`);
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+
     const timer = setInterval(() => {
       const now = new Date().getTime();
       const distance = launchDate.getTime() - now;
@@ -33,7 +48,10 @@ const ComingSoon: React.FC = () => {
       });
     }, 1000);
 
-    return () => clearInterval(timer);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      clearInterval(timer);
+    };
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -54,6 +72,7 @@ const ComingSoon: React.FC = () => {
 
   const floatingLogos = Array.from({ length: 24 }).map((_, i) => {
     const size = Math.random() * 8 + 4; // size between 4rem and 12rem
+    const parallaxFactor = Math.random() * 20 + 10;
     return {
       src: '/Artboard1.png',
       alt: 'Awaitsi Logo',
@@ -67,12 +86,13 @@ const ComingSoon: React.FC = () => {
         animationDuration: `${Math.random() * 20 + 20}s`,
         opacity: Math.random() * 0.3 + 0.2, // opacity between 0.2 and 0.5
         zIndex: 5,
+        transform: `translateX(calc(var(--mouse-x, 0) * ${parallaxFactor}px)) translateY(calc(var(--mouse-y, 0) * ${parallaxFactor}px))`
       },
     };
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-cyan-600 relative overflow-hidden">
+    <div ref={containerRef} className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-cyan-600 relative overflow-hidden animate-background-pan">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {floatingIcons.map((item, idx) => (
@@ -124,14 +144,14 @@ const ComingSoon: React.FC = () => {
         {/* Main Heading */}
         <div className="text-center mb-8 animate-fade-in-up">
           <h1 
-            className="text-5xl md:text-7xl font-bold text-white mb-4"
-            style={{ fontFamily: 'Montserrat, sans-serif' }}
+            className="text-5xl md:text-7xl font-extrabold text-white mb-4"
+            style={{ fontFamily: 'Montserrat, sans-serif', textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}
           >
             Something Amazing
           </h1>
           <h2 
             className="text-3xl md:text-5xl font-bold text-lime-400 mb-6"
-            style={{ fontFamily: 'Montserrat, sans-serif' }}
+            style={{ fontFamily: 'Montserrat, sans-serif', textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}
           >
             Is Coming Soon
           </h2>
@@ -151,11 +171,11 @@ const ComingSoon: React.FC = () => {
             ].map((item, idx) => (
               <div key={idx} className="text-center">
                 <div 
-                  className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 md:p-6 shadow-2xl"
+                  className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 md:p-6 shadow-2xl transition-all duration-300 hover:bg-white/20 hover:shadow-lime-400/30"
                 >
                   <div 
                     className="text-4xl md:text-6xl font-bold text-white mb-2"
-                    style={{ fontFamily: 'Montserrat, sans-serif' }}
+                    style={{ fontFamily: 'Montserrat, sans-serif', textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}
                   >
                     {String(item.value).padStart(2, '0')}
                   </div>
@@ -182,9 +202,11 @@ const ComingSoon: React.FC = () => {
             ].map((service, idx) => (
               <div 
                 key={idx}
-                className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4 text-center hover:bg-white/20 transition duration-300"
+                className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4 text-center hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl"
               >
-                <service.Icon className="w-8 h-8 text-lime-400 mx-auto mb-2" />
+                <div className="w-16 h-16 bg-gradient-to-br from-white/20 to-white/10 rounded-lg flex items-center justify-center mx-auto mb-4 border border-white/30">
+                  <service.Icon className="w-8 h-8 text-lime-400 mx-auto" />
+                </div>
                 <div className="text-white text-sm font-semibold">{service.label}</div>
               </div>
             ))}
@@ -215,7 +237,7 @@ const ComingSoon: React.FC = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-lime-400 hover:bg-lime-300 text-blue-900 font-bold py-3 rounded-lg transition duration-300 shadow-lg"
+                  className="w-full bg-gradient-to-r from-lime-400 to-awaitsi-green text-blue-900 font-bold py-3 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
                 >
                   Notify Me at Launch
                 </button>
@@ -278,6 +300,18 @@ const ComingSoon: React.FC = () => {
           }
         }
 
+        @keyframes background-pan {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
         @keyframes fade-in {
           from {
             opacity: 0;
@@ -305,6 +339,11 @@ const ComingSoon: React.FC = () => {
           50% {
             transform: scale(1.05);
           }
+        }
+
+        .animate-background-pan {
+          background-size: 400% 400%;
+          animation: background-pan 15s ease-in-out infinite;
         }
 
         .animate-float {
