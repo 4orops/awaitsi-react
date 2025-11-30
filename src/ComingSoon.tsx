@@ -18,9 +18,7 @@ const ComingSoon: React.FC = () => {
     seconds: 0
   });
 
-  // Set launch date (30 days from now)
-  const launchDate = new Date();
-  launchDate.setDate(launchDate.getDate() + 100);
+  const launchDate = new Date('2026-03-02T00:00:00'); // March 2, 2026
 
   useEffect(() => {
     const timer = setInterval(() => {
