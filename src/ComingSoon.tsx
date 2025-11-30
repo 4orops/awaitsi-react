@@ -52,6 +52,25 @@ const ComingSoon: React.FC = () => {
     { Icon: Sparkles, delay: '3s', duration: '18s' }
   ];
 
+  const floatingLogos = Array.from({ length: 24 }).map((_, i) => {
+    const size = Math.random() * 8 + 4; // size between 4rem and 12rem
+    return {
+      src: '/Artboard1.png',
+      alt: 'Awaitsi Logo',
+      className: `absolute animate-float`,
+      style: {
+        left: `${Math.random() * 90}%`,
+        top: `${Math.random() * 90}%`,
+        width: `${size}rem`,
+        height: `${size}rem`,
+        animationDelay: `${Math.random() * 10}s`,
+        animationDuration: `${Math.random() * 20 + 20}s`,
+        opacity: Math.random() * 0.3 + 0.2, // opacity between 0.2 and 0.5
+        zIndex: 5,
+      },
+    };
+  });
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-cyan-600 relative overflow-hidden">
       {/* Animated Background Elements */}
@@ -70,6 +89,15 @@ const ComingSoon: React.FC = () => {
             <item.Icon className="w-24 h-24 text-white" />
           </div>
         ))}
+        {floatingLogos.map((logo, idx) => (
+          <img
+            key={idx}
+            src={logo.src}
+            alt={logo.alt}
+            className={logo.className}
+            style={logo.style}
+          />
+        ))}
       </div>
 
       {/* Grid Pattern Overlay */}
@@ -78,18 +106,12 @@ const ComingSoon: React.FC = () => {
       {/* Main Content */}
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 py-12">
         {/* Logo */}
-         <div className="mb-8 animate-fade-in">
-          {/* <img 
-            src="/awaitsi-logo.png" 
-            alt="Awaitsi Logo" 
-            className="h-20 md:h-24 drop-shadow-2xl"
-          />  */}
-            <h1 
-            className="text-5xl md:text-7xl font-bold text-white mb-4"
-            style={{ fontFamily: 'Montserrat, sans-serif' }}
-          >
-            AWAITSI
-          </h1>
+         <div className="mb-8 animate-fade-in relative z-20 w-full flex justify-center"> {/* Added relative z-20 for positioning context and flex for centering */}
+            <img
+              src="/Artboard1.png"
+              alt="Awaitsi Logo"
+              className="w-48 h-48 md:w-64 md:h-64 drop-shadow-2xl animate-pulse-slow" 
+            />  {/* Increased size and added pulse animation */}
         </div>
 
         {/* Heart Icon with Pulse */}
