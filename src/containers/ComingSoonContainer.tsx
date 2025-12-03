@@ -54,7 +54,7 @@ const ComingSoonContainer: React.FC = () => {
       setIsSubmitting(true);
       setError(null);
       try {
-        const response = await fetch('/api/subscribe', { // Changed URL to API route
+        const response = await fetch('/.netlify/functions/subscribe', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
