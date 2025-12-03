@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Mail, Phone, Sparkles, Heart, Code, Smartphone, Database } from 'lucide-react';
 
 interface TimeLeft {
@@ -8,61 +8,27 @@ interface TimeLeft {
   seconds: number;
 }
 
-const ComingSoon: React.FC = () => {
-  const [email, setEmail] = useState<string>('');
-  const [submitted, setSubmitted] = useState<boolean>(false);
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
+interface ComingSoonPageProps {
+  email: string;
+  setEmail: (email: string) => void;
+  submitted: boolean;
+  handleSubmit: (e: React.FormEvent) => void;
+  timeLeft: TimeLeft;
+  containerRef: React.RefObject<HTMLDivElement | null>;
+  isSubmitting: boolean;
+  error: string | null;
+}
 
-
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const launchDate = new Date('2026-03-02T00:00:00'); // March 2, 2026
-
-  useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      if (containerRef.current) {
-        const { clientX, clientY } = event;
-        const { innerWidth, innerHeight } = window;
-        const x = (clientX / innerWidth) * 2 - 1;
-        const y = (clientY / innerHeight) * 2 - 1;
-        containerRef.current.style.setProperty('--mouse-x', `${x}`);
-        containerRef.current.style.setProperty('--mouse-y', `${y}`);
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-
-    const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = launchDate.getTime() - now;
-
-      setTimeLeft({
-        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((distance % (1000 * 60)) / 1000)
-      });
-    }, 1000);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      clearInterval(timer);
-    };
-  }, []);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      setSubmitted(true);
-      setTimeout(() => setSubmitted(false), 3000);
-      setEmail('');
-    }
-  };
-
+const ComingSoonPage: React.FC<ComingSoonPageProps> = ({
+  email,
+  setEmail,
+  submitted,
+  handleSubmit,
+  timeLeft,
+  containerRef,
+  isSubmitting,
+  error,
+}) => {
   const floatingIcons = [
     { Icon: Code, delay: '0s', duration: '20s' },
     { Icon: Smartphone, delay: '5s', duration: '25s' },
@@ -130,7 +96,7 @@ const ComingSoon: React.FC = () => {
             <img
               src="/Artboard1.png"
               alt="Awaitsi Logo"
-              className="w-48 h-48 md:w-64 md:h-64 drop-shadow-2xl animate-pulse-slow" 
+              className="w-48 h-48 md:w-64 md:h-64 drop-shadow-2xl animate-pulse-slow"
             />  {/* Increased size and added pulse animation */}
         </div>
 
@@ -143,13 +109,13 @@ const ComingSoon: React.FC = () => {
 
         {/* Main Heading */}
         <div className="text-center mb-8 animate-fade-in-up">
-          <h1 
+          <h1
             className="text-5xl md:text-7xl font-extrabold text-white mb-4"
             style={{ fontFamily: 'Montserrat, sans-serif', textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}
           >
             Something Amazing
           </h1>
-          <h2 
+          <h2
             className="text-3xl md:text-5xl font-bold text-lime-400 mb-6"
             style={{ fontFamily: 'Montserrat, sans-serif', textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}
           >
@@ -170,10 +136,10 @@ const ComingSoon: React.FC = () => {
               { value: timeLeft.seconds, label: 'Seconds' }
             ].map((item, idx) => (
               <div key={idx} className="text-center">
-                <div 
+                <div
                   className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 md:p-6 shadow-2xl transition-all duration-300 hover:bg-white/20 hover:shadow-lime-400/30"
                 >
-                  <div 
+                  <div
                     className="text-4xl md:text-6xl font-bold text-white mb-2"
                     style={{ fontFamily: 'Montserrat, sans-serif', textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}
                   >
@@ -189,7 +155,7 @@ const ComingSoon: React.FC = () => {
         </div>
 
         {/* Services Preview */}
-        <div 
+        <div
           className="mb-12 max-w-4xl mx-auto animate-fade-in-up"
           style={{ animationDelay: '0.4s' }}
         >
@@ -200,7 +166,7 @@ const ComingSoon: React.FC = () => {
               { Icon: Database, label: 'CRM' },
               { Icon: Sparkles, label: 'AI Solutions' }
             ].map((service, idx) => (
-              <div 
+              <div
                 key={idx}
                 className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4 text-center hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl"
               >
@@ -214,7 +180,7 @@ const ComingSoon: React.FC = () => {
         </div>
 
         {/* Email Notification Form */}
-        <div 
+        <div
           className="mb-12 max-w-md w-full animate-fade-in-up"
           style={{ animationDelay: '0.6s' }}
         >
@@ -237,10 +203,14 @@ const ComingSoon: React.FC = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-lime-400 to-awaitsi-green text-blue-900 font-bold py-3 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-lime-400 to-awaitsi-green text-blue-900 font-bold py-3 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Notify Me at Launch
+                  {isSubmitting ? 'Submitting...' : 'Notify Me at Launch'}
                 </button>
+                {error && (
+                  <p className="text-red-400 text-sm text-center mt-2">{error}</p>
+                )}
               </form>
             ) : (
               <div className="text-center py-4">
@@ -256,20 +226,20 @@ const ComingSoon: React.FC = () => {
         </div>
 
         {/* Contact Information */}
-        <div 
+        <div
           className="text-center animate-fade-in-up"
           style={{ animationDelay: '0.8s' }}
         >
           <p className="text-cyan-100 mb-4">Need to reach us now?</p>
           <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
-            <a 
+            <a
               href="mailto:info@awaitsi.co.za"
               className="flex items-center gap-2 text-white hover:text-lime-400 transition"
             >
               <Mail className="w-5 h-5" />
               <span>info@awaitsi.co.za</span>
             </a>
-            <a 
+            <a
               href="tel:+27838672031"
               className="flex items-center gap-2 text-white hover:text-lime-400 transition"
             >
@@ -280,7 +250,7 @@ const ComingSoon: React.FC = () => {
         </div>
 
         {/* Social Proof */}
-        <div 
+        <div
           className="mt-12 text-center animate-fade-in-up"
           style={{ animationDelay: '1s' }}
         >
@@ -364,7 +334,7 @@ const ComingSoon: React.FC = () => {
         }
 
         .bg-grid-pattern {
-          background-image: 
+          background-image:
             linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
           background-size: 50px 50px;
@@ -374,4 +344,4 @@ const ComingSoon: React.FC = () => {
   );
 };
 
-export default ComingSoon;
+export default ComingSoonPage;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 
 
-const Navigation = () => {
+const Navigation: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -14,7 +14,7 @@ const Navigation = () => {
               AWAITSI
             </div>
           </div>
-          
+
           <div className="hidden md:flex gap-8">
             <a href="#home" className="text-gray-700 hover:text-blue-900 transition">Home</a>
             <a href="#about" className="text-gray-700 hover:text-blue-900 transition">About</a>
@@ -26,7 +26,7 @@ const Navigation = () => {
             Get a Quote
           </button>
 
-          <button 
+          <button
             className="md:hidden"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >

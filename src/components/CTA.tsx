@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CTA = () => {
+const CTA: React.FC = () => {
   return (
     <section className="py-20 px-4 bg-gradient-to-r from-blue-900 to-cyan-600">
       <div className="max-w-4xl mx-auto text-center text-white">

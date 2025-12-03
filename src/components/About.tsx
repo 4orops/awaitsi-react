@@ -1,7 +1,7 @@
 import React from 'react';
 import { Heart, Users, TrendingUp, Sparkles } from 'lucide-react';
 
-const About = () => {
+const About: React.FC = () => {
   return (
     <section id="about" className="py-20 px-4">
       <div className="max-w-7xl mx-auto">

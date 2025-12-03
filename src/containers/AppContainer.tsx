@@ -1,15 +1,8 @@
 import React from 'react';
+import AppPage from '../pages/AppPage';
 import { Code, Smartphone, Database, Sparkles } from 'lucide-react';
-import Navigation from './components/Navigation';
-import Hero from './components/Hero';
-import Stats from './components/Stats';
-import About from './components/About';
-import Services from './components/Services';
-import CTA from './components/CTA';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
 
-const App = () => {
+const AppContainer: React.FC = () => {
   const services = [
     {
       icon: <Code className="w-8 h-8" />,
@@ -17,6 +10,7 @@ const App = () => {
       description: "Custom, mobile-first websites designed to elevate your business online.",
       price: "From R12,000"
     },
+    
     {
       icon: <Smartphone className="w-8 h-8" />,
       title: "Mobile Apps",
@@ -44,17 +38,11 @@ const App = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white text-gray-900">
-      <Navigation />
-      <Hero />
-      <Stats stats={stats} />
-      <About />
-      <Services services={services} />
-      <CTA />
-      <Contact />
-      <Footer />
-    </div>
+    <AppPage
+      services={services}
+      stats={stats}
+    />
   );
 };
 
-export default App;
+export default AppContainer;

@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 
-const Contact = () => {
-  const [formData, setFormData] = useState({
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  projectType: string;
+  message: string;
+}
+
+const Contact: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     phone: '',
@@ -9,7 +17,7 @@ const Contact = () => {
     message: '',
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
       ...prevState,
@@ -33,7 +41,7 @@ const Contact = () => {
           <div className="grid md:grid-cols-2 gap-6 mb-6">
             <div>
               <label className="block text-gray-700 font-semibold mb-2" htmlFor="name">Name</label>
-              <input 
+              <input
                 type="text"
                 id="name"
                 name="name"
@@ -45,7 +53,7 @@ const Contact = () => {
             </div>
             <div>
               <label className="block text-gray-700 font-semibold mb-2" htmlFor="email">Email</label>
-              <input 
+              <input
                 type="email"
                 id="email"
                 name="email"
@@ -58,7 +66,7 @@ const Contact = () => {
           </div>
           <div className="mb-6">
             <label className="block text-gray-700 font-semibold mb-2" htmlFor="phone">Phone</label>
-            <input 
+            <input
               type="tel"
               id="phone"
               name="phone"
@@ -70,7 +78,7 @@ const Contact = () => {
           </div>
           <div className="mb-6">
             <label className="block text-gray-700 font-semibold mb-2" htmlFor="projectType">Project Type</label>
-            <select 
+            <select
               id="projectType"
               name="projectType"
               value={formData.projectType}
@@ -86,17 +94,17 @@ const Contact = () => {
           </div>
           <div className="mb-6">
             <label className="block text-gray-700 font-semibold mb-2" htmlFor="message">Tell us about your project</label>
-            <textarea 
+            <textarea
               id="message"
               name="message"
               value={formData.message}
               onChange={handleChange}
-              rows="5" 
+              rows={5}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-cyan-500"
               placeholder="Share your vision with us..."
             ></textarea>
           </div>
-          <button 
+          <button
             className="w-full px-8 py-4 bg-gradient-to-r from-blue-900 to-cyan-500 text-white font-bold text-lg rounded-lg hover:shadow-xl transition"
           >
             Send Message

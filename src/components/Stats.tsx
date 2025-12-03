@@ -1,6 +1,15 @@
 import React from 'react';
 
-const Stats = ({ stats }) => {
+interface Stat {
+  number: string;
+  label: string;
+}
+
+interface StatsProps {
+  stats: Stat[];
+}
+
+const Stats: React.FC<StatsProps> = ({ stats }) => {
   return (
     <section className="py-12 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4">
