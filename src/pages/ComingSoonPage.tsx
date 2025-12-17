@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Phone, Sparkles, Heart, Code, Smartphone, Database } from 'lucide-react';
+import { Mail, Phone, Sparkles, Heart, Code, Smartphone, Database, Laptop, Server, Cloud, GitMerge, Users, TrendingUp } from 'lucide-react';
 
 interface TimeLeft {
   days: number;
@@ -29,33 +29,22 @@ const ComingSoonPage: React.FC<ComingSoonPageProps> = ({
   isSubmitting,
   error,
 }) => {
-  const floatingIcons = [
-    { Icon: Code, delay: '0s', duration: '20s' },
-    { Icon: Smartphone, delay: '5s', duration: '25s' },
-    { Icon: Database, delay: '10s', duration: '22s' },
-    { Icon: Sparkles, delay: '3s', duration: '18s' }
-  ];
-
-  const floatingLogos = Array.from({ length: 24 }).map((_, i) => {
-    const size = Math.random() * 8 + 4; // size between 4rem and 12rem
-    const parallaxFactor = Math.random() * 20 + 10;
-    return {
-      src: '/Artboard1.png',
-      alt: 'Awaitsi Logo',
-      className: `absolute animate-float`,
-      style: {
-        left: `${Math.random() * 90}%`,
-        top: `${Math.random() * 90}%`,
-        width: `${size}rem`,
-        height: `${size}rem`,
-        animationDelay: `${Math.random() * 10}s`,
-        animationDuration: `${Math.random() * 20 + 20}s`,
-        opacity: Math.random() * 0.3 + 0.2, // opacity between 0.2 and 0.5
-        zIndex: 5,
-        transform: `translateX(calc(var(--mouse-x, 0) * ${parallaxFactor}px)) translateY(calc(var(--mouse-y, 0) * ${parallaxFactor}px))`
-      },
-    };
-  });
+  const [floatingIcons] = React.useState(() => [
+    { Icon: Code },
+    { Icon: Smartphone },
+    { Icon: Database },
+    { Icon: Sparkles },
+    { Icon: Laptop },
+    { Icon: Server },
+    { Icon: Cloud },
+    { Icon: GitMerge },
+    { Icon: Users },
+    { Icon: TrendingUp }
+  ].map(item => ({
+    ...item,
+    left: `${Math.random() * 90}%`,
+    top: `${Math.random() * 90}%`,
+  })));
 
   return (
     <div ref={containerRef} className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-cyan-600 relative overflow-hidden animate-background-pan">
@@ -64,25 +53,14 @@ const ComingSoonPage: React.FC<ComingSoonPageProps> = ({
         {floatingIcons.map((item, idx) => (
           <div
             key={idx}
-            className="absolute animate-float opacity-10"
+            className="absolute opacity-10"
             style={{
-              left: `${15 + idx * 20}%`,
-              top: `${10 + idx * 15}%`,
-              animationDelay: item.delay,
-              animationDuration: item.duration
+              left: item.left,
+              top: item.top,
             }}
           >
             <item.Icon className="w-24 h-24 text-white" />
           </div>
-        ))}
-        {floatingLogos.map((logo, idx) => (
-          <img
-            key={idx}
-            src={logo.src}
-            alt={logo.alt}
-            className={logo.className}
-            style={logo.style}
-          />
         ))}
       </div>
 
@@ -261,15 +239,6 @@ const ComingSoonPage: React.FC<ComingSoonPageProps> = ({
       </div>
 
       <style>{`
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0px) rotate(0deg);
-          }
-          50% {
-            transform: translateY(-20px) rotate(5deg);
-          }
-        }
-
         @keyframes background-pan {
           0% {
             background-position: 0% 50%;
@@ -314,10 +283,6 @@ const ComingSoonPage: React.FC<ComingSoonPageProps> = ({
         .animate-background-pan {
           background-size: 400% 400%;
           animation: background-pan 15s ease-in-out infinite;
-        }
-
-        .animate-float {
-          animation: float 20s ease-in-out infinite;
         }
 
         .animate-fade-in {
