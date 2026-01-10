@@ -222,7 +222,7 @@ const ComingSoonPage: React.FC<ComingSoonPageProps> = ({
               className="flex items-center gap-2 text-white hover:text-lime-400 transition"
             >
               <Phone className="w-5 h-5" />
-              <span>+27 83 867 2031</span>
+              <span>+27 65 544 3979</span>
             </a>
           </div>
         </div>
