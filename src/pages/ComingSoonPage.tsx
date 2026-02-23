@@ -70,12 +70,12 @@ const ComingSoonPage: React.FC<ComingSoonPageProps> = ({
       {/* Main Content */}
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 py-12">
         {/* Logo */}
-         <div className="mb-8 animate-fade-in relative z-20 w-full flex justify-center"> {/* Added relative z-20 for positioning context and flex for centering */}
-            <img
-              src="/Artboard1.png"
-              alt="Awaitsi Logo"
-              className="w-48 h-48 md:w-64 md:h-64 drop-shadow-2xl animate-pulse-slow"
-            />  {/* Increased size and added pulse animation */}
+        <div className="mb-8 animate-fade-in relative z-20 w-full flex justify-center"> {/* Added relative z-20 for positioning context and flex for centering */}
+          <img
+            src="/Artboard1.png"
+            alt="Awaitsi Logo"
+            className="w-48 h-48 md:w-64 md:h-64 drop-shadow-2xl animate-pulse-slow"
+          />  {/* Increased size and added pulse animation */}
         </div>
 
         {/* Heart Icon with Pulse */}
@@ -233,7 +233,7 @@ const ComingSoonPage: React.FC<ComingSoonPageProps> = ({
           style={{ animationDelay: '1s' }}
         >
           <p className="text-cyan-200 text-sm">
-            Family-Owned • South African • Built with ❤️
+            Family-Oriented • South African • Built with ❤️
           </p>
         </div>
       </div>
