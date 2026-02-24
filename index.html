@@ -12,6 +12,24 @@
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- 
+      Netlify Forms Detection
+      These forms are hidden from users but seen by Netlify's build bot.
+      This enables the POST endpoint for SPAs.
+    -->
+    <form name="contact" data-netlify="true" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="projectType" />
+      <textarea name="message"></textarea>
+    </form>
+
+    <form name="newsletter" data-netlify="true" hidden>
+      <input type="email" name="email" />
+    </form>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
