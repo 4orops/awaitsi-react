@@ -167,11 +167,20 @@ const ComingSoonPage: React.FC<ComingSoonPageProps> = ({
               Be the First to Know
             </h3>
             {!submitted ? (
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-4"
+                name="newsletter"
+                data-netlify="true"
+              >
+                {/* Hidden input for Netlify bot field / spam protection */}
+                <input type="hidden" name="form-name" value="newsletter" />
+
                 <div className="relative">
                   <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                   <input
                     type="email"
+                    name="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"

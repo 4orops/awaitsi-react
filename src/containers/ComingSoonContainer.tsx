@@ -54,12 +54,16 @@ const ComingSoonContainer: React.FC = () => {
       setIsSubmitting(true);
       setError(null);
       try {
-        const response = await fetch('/.netlify/functions/subscribe', {
+        // Submit to Netlify Forms via AJAX
+        const response = await fetch('/', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
           },
-          body: JSON.stringify({ email }),
+          body: new URLSearchParams({
+            'form-name': 'newsletter',
+            'email': email,
+          }).toString(),
         });
 
         if (response.ok) {
