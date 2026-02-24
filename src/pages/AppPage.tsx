@@ -7,6 +7,7 @@ import Services from '../components/Services';
 import CTA from '../components/CTA';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
+import Portfolio from '../components/Portfolio';
 
 interface Service {
   icon: React.ReactNode;
@@ -33,6 +34,7 @@ const AppPage: React.FC<AppPageProps> = ({ services, stats }) => {
       <Stats stats={stats} />
       <About />
       <Services services={services} />
+      <Portfolio />
       <CTA />
       <Contact />
       <Footer />

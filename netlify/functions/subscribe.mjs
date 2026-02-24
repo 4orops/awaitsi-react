@@ -1,5 +1,11 @@
-import client from '@sendgrid/client';
-
+/**
+ * Netlify Function: subscribe
+ * Handles email subscription requests.
+ * 
+ * Flow:
+ * 1. Validate request
+ * 2. [Optional] Save to Database (Supabase/MongoDB/Firestore)
+ */
 export const handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return {
@@ -8,61 +14,32 @@ export const handler = async (event) => {
     };
   }
 
-  const { email } = JSON.parse(event.body);
-
-  if (!email) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ message: 'Email is required' }),
-    };
-  }
-
-  const sendGridApiKey = process.env.VITE_SENDGRID_API_KEY;
-  if (!sendGridApiKey || sendGridApiKey === 'YOUR_SENDGRID_API_KEY_HERE') {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ message: 'Server configuration error.' }),
-    };
-  }
-  client.setApiKey(sendGridApiKey);
-
-  const listId = process.env.VITE_SENDGRID_LIST_ID;
-  if (!listId || listId === 'YOUR_SENDGRID_LIST_ID_HERE') {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ message: 'Server configuration error.' }),
-    };
-  }
-
-  const data = {
-    list_ids: [listId],
-    contacts: [{ email }],
-  };
-
-  const request = {
-    url: `/v3/marketing/contacts`,
-    method: 'PUT',
-    body: JSON.stringify(data),
-  };
-
   try {
-    const [response] = await client.request(request);
-    if (response.statusCode >= 200 && response.statusCode < 300) {
+    const { email } = JSON.parse(event.body);
+
+    if (!email) {
       return {
-        statusCode: 200,
-        body: JSON.stringify({ message: 'Successfully subscribed!' }),
-      };
-    } else {
-      return {
-        statusCode: response.statusCode,
-        body: JSON.stringify({ message: 'Error subscribing.' }),
+        statusCode: 400,
+        body: JSON.stringify({ message: 'Email is required' }),
       };
     }
+
+    // 2. Database Integration Placeholder
+    // Example for Supabase:
+    // const { data, error } = await supabase.from('subscribers').insert([{ email, created_at: new Date() }]);
+
+    console.log('Received subscription:', { email, timestamp: new Date() });
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: 'Successfully subscribed!' }),
+    };
+
   } catch (error) {
-    console.error('An error occurred while trying to contact SendGrid.', error);
+    console.error('Subscribe function error:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'An unknown error occurred.' }),
+      body: JSON.stringify({ message: 'Internal Server Error' }),
     };
   }
 };
