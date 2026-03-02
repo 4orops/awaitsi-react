@@ -14,11 +14,20 @@ const Navigation: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const targetId = href.replace('#', '');
+    const element = document.getElementById(targetId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   const navLinks = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
     { name: 'Services', href: '#services' },
-    { name: 'Our Work', href: '#portfolio' }, // Updated to point to new portfolio section
+    { name: 'Our Work', href: '#portfolio' },
     { name: 'Contact', href: '#contact' },
   ];
 
@@ -44,6 +53,7 @@ const Navigation: React.FC = () => {
               <a
                 key={link.name}
                 href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className={`font-medium transition-colors hover:text-cyan-500 ${scrolled ? 'text-gray-700' : 'text-white'}`}
               >
                 {link.name}
@@ -80,7 +90,10 @@ const Navigation: React.FC = () => {
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    handleNavClick(e, link.href);
+                    setMobileMenuOpen(false);
+                  }}
                   className="block text-lg font-medium text-gray-700 hover:text-cyan-500"
                 >
                   {link.name}

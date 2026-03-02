@@ -255,10 +255,10 @@ const RealEstateLayout = () => {
                         <span className="font-bold text-xl tracking-tight">Luxe<span className="font-light">Estates</span></span>
                     </div>
                     <div className="hidden md:flex gap-8 text-sm font-semibold text-gray-600">
-                        <a href="#" className="text-gray-900">Buy</a>
-                        <a href="#" className="hover:text-gray-900 transition">Rent</a>
-                        <a href="#" className="hover:text-gray-900 transition">Developments</a>
-                        <a href="#" className="hover:text-gray-900 transition">Sold</a>
+                        <a href="#" onClick={(e) => e.preventDefault()} className="text-gray-900">Buy</a>
+                        <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-gray-900 transition">Rent</a>
+                        <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-gray-900 transition">Developments</a>
+                        <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-gray-900 transition">Sold</a>
                     </div>
                     <button className="px-6 py-2 bg-gray-900 text-white font-bold rounded-lg hover:bg-gray-800 transition">
                         List Property

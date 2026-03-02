@@ -20,7 +20,12 @@ const Footer: React.FC = () => {
             </p>
             <div className="flex gap-4">
               {[Linkedin, Facebook, Instagram].map((Icon, i) => (
-                <a key={i} href="#" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:bg-lime-400 hover:text-gray-900 transition-all duration-300">
+                <a
+                  key={i}
+                  href="#"
+                  onClick={(e) => e.preventDefault()}
+                  className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:bg-lime-400 hover:text-gray-900 transition-all duration-300"
+                >
                   <Icon className="w-5 h-5" />
                 </a>
               ))}
@@ -69,8 +74,8 @@ const Footer: React.FC = () => {
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
           <p>&copy; 2025 Awaitsi (Pty) Ltd. All rights reserved.</p>
           <div className="flex gap-8">
-            <a href="#" className="hover:text-white transition">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition">Terms of Service</a>
+            <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-white transition">Privacy Policy</a>
+            <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-white transition">Terms of Service</a>
           </div>
         </div>
       </div>

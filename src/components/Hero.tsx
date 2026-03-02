@@ -40,7 +40,12 @@ const Hero = () => {
                 </motion.button>
 
                 <motion.button
-                  onClick={() => setIsLearnMoreOpen(true)}
+                  onClick={() => {
+                    const element = document.getElementById('about');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }}
                   whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.15)" }}
                   whileTap={{ scale: 0.95 }}
                   className="px-8 py-3 border-2 border-white/30 backdrop-blur-sm text-white font-semibold rounded-xl hover:border-white/60 transition flex items-center gap-2"

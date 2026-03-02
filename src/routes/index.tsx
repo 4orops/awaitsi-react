@@ -1,6 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
 import AppContainer from '../containers/AppContainer';
-import ComingSoonContainer from '../containers/ComingSoonContainer';
 import React from 'react';
 
 const AsyncSalon = React.lazy(() => import('../projects/salon/SalonLayout'));
@@ -19,10 +18,6 @@ const LoadingFallback = () => (
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <ComingSoonContainer />,
-  },
-  {
-    path: '/app',
     element: <AppContainer />,
   },
   {

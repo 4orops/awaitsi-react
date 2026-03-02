@@ -1,35 +1,59 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/public/Artboard 1.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Awaitsi - Building technology with heart. Family-owned South African tech company offering web development, mobile apps, CRM solutions, and AI integration." />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <title>Awaitsi - Building Technology with Heart</title>
-  </head>
-  <body>
-    <div id="root"></div>
 
-    <!-- 
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/Artboard1.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Awaitsi - Building technology with heart. Family-owned South African tech company offering web development, mobile apps, CRM solutions, and AI integration." />
+  <link rel="canonical" href="https://awaitsi.co.za" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://awaitsi.co.za/" />
+  <meta property="og:title" content="Awaitsi - Building Technology with Heart" />
+  <meta property="og:description"
+    content="Purpose-driven technology company empowering South African businesses with affordable, innovative digital solutions." />
+  <meta property="og:image" content="https://awaitsi.co.za/Artboard1.png" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://awaitsi.co.za/" />
+  <meta property="twitter:title" content="Awaitsi - Building Technology with Heart" />
+  <meta property="twitter:description"
+    content="Purpose-driven technology company empowering South African businesses with affordable, innovative digital solutions." />
+  <meta property="twitter:image" content="https://awaitsi.co.za/Artboard1.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@300;400;600;700&display=swap"
+    rel="stylesheet">
+  <title>Awaitsi - Building Technology with Heart</title>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <!-- 
       Netlify Forms Detection
       These forms are hidden from users but seen by Netlify's build bot.
       This enables the POST endpoint for SPAs.
     -->
-    <form name="contact" data-netlify="true" hidden>
-      <input type="text" name="name" />
-      <input type="email" name="email" />
-      <input type="tel" name="phone" />
-      <input type="text" name="projectType" />
-      <textarea name="message"></textarea>
-    </form>
+  <form name="contact" data-netlify="true" hidden>
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <input type="tel" name="phone" />
+    <input type="text" name="projectType" />
+    <textarea name="message"></textarea>
+  </form>
 
-    <form name="newsletter" data-netlify="true" hidden>
-      <input type="email" name="email" />
-    </form>
+  <form name="newsletter" data-netlify="true" hidden>
+    <input type="email" name="email" />
+  </form>
 
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
