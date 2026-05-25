@@ -1,43 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navigation from '../components/Navigation';
 import Hero from '../components/Hero';
-import Stats from '../components/Stats';
+
 import About from '../components/About';
-import Services from '../components/Services';
+import Services, { Service } from '../components/Services';
 import CTA from '../components/CTA';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import Portfolio from '../components/Portfolio';
-
-interface Service {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-  price: string;
-}
-
-interface Stat {
-  number: string;
-  label: string;
-}
+import WhyChooseUs from '../components/WhyChooseUs';
+import BlogSection from '../components/BlogSection';
+import JourneyModal from '../components/JourneyModal';
+import LearnMoreModal from '../components/LearnMoreModal';
 
 interface AppPageProps {
   services: Service[];
-  stats: Stat[];
+
 }
 
-const AppPage: React.FC<AppPageProps> = ({ services, stats }) => {
+const AppPage: React.FC<AppPageProps> = ({ services }) => {
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+  const [isLearnMoreOpen, setIsLearnMoreOpen] = useState(false);
+
   return (
-    <div className="min-h-screen bg-white text-gray-900">
-      <Navigation />
-      <Hero />
-      <Stats stats={stats} />
+    <div className="min-h-screen bg-awaitsi-gray-950 text-white">
+      <Navigation onQuote={() => setIsQuoteModalOpen(true)} />
+      <Hero 
+        onQuote={() => setIsQuoteModalOpen(true)} 
+        onLearnMore={() => setIsLearnMoreOpen(true)} 
+      />
+
       <About />
-      <Services services={services} />
+      <Services services={services} onQuote={() => setIsQuoteModalOpen(true)} />
       <Portfolio />
-      <CTA />
+      <WhyChooseUs />
+      <BlogSection />
+      <CTA onQuote={() => setIsQuoteModalOpen(true)} />
       <Contact />
       <Footer />
+
+      <JourneyModal isOpen={isQuoteModalOpen} onClose={() => setIsQuoteModalOpen(false)} />
+      <LearnMoreModal isOpen={isLearnMoreOpen} onClose={() => setIsLearnMoreOpen(false)} />
     </div>
   );
 };

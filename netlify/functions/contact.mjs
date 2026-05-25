@@ -1,12 +1,11 @@
-/**
- * Netlify Function: contact
- * Handles POST requests from the Contact form.
- * 
- * Flow:
- * 1. Validate request
- * 2. Log submission for security and debugging
  * 3. Return a consistent response for the frontend
  */
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_ANON_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
+
 export const handler = async (event) => {
     // Only allow POST requests
     if (event.httpMethod !== 'POST') {
@@ -23,14 +22,14 @@ export const handler = async (event) => {
         }
 
         const payload = JSON.parse(event.body);
-        const { name, email, phone, projectType, message } = payload;
+        const { name, email, phone, projectType, message, businessStage, budget, description } = payload;
 
         // 1. Core Validation
-        if (!name || !email || !message) {
+        if (!name || !email || (!message && !description)) {
             return {
                 statusCode: 400,
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: 'Please provide name, email, and message.' }),
+                body: JSON.stringify({ message: 'Please provide name, email, and description.' }),
             };
         }
 
@@ -49,15 +48,27 @@ export const handler = async (event) => {
         console.log(`From: ${name} <${email}>`);
         console.log(`Phone: ${phone || 'N/A'}`);
         console.log(`Interest: ${projectType || 'General'}`);
-        console.log(`Message: ${message}`);
+        console.log(`Message: ${message || description}`);
 
-        /**
-         * FUTURE ENHANCEMENT:
-         * To send emails automatically, you can add:
-         * await sendgrid.send({ ... }) 
-         * or 
-         * await supabase.from('leads').insert({ ... })
-         */
+        // 3. Store in Supabase
+        const { error: dbError } = await supabase
+            .from('quotes')
+            .insert([
+                {
+                    name,
+                    email,
+                    phone,
+                    project_type: projectType,
+                    description: message || description,
+                    business_stage: businessStage,
+                    budget: budget
+                }
+            ]);
+
+        if (dbError) {
+            console.error('[SUPABASE_ERROR]', dbError);
+            // We still log it but maybe we don't fail the entire response if we want to be resilient
+        }
 
         return {
             statusCode: 200,

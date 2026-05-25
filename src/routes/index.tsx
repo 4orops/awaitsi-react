@@ -7,21 +7,26 @@ const AsyncRealEstate = React.lazy(() => import('../projects/real-estate/RealEst
 const AsyncAi = React.lazy(() => import('../projects/ai/AiLayout'));
 const AsyncCrm = React.lazy(() => import('../projects/crm/CrmLayout'));
 const AsyncMobile = React.lazy(() => import('../projects/mobile/MobileLayout'));
+const AsyncAutomation = React.lazy(() => import('../projects/automation/AutomationLayout'));
+const AsyncComingSoon = React.lazy(() => import('../pages/ComingSoonPage'));
+const AsyncPrivacy = React.lazy(() => import('../pages/PrivacyPolicyPage'));
+const AsyncTerms = React.lazy(() => import('../pages/TermsPage'));
+const AsyncNotFound = React.lazy(() => import('../pages/NotFoundPage'));
 
 const LoadingFallback = () => (
-  <div className="flex items-center justify-center min-h-screen" role="status" aria-live="polite">
-    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500" aria-hidden="true"></div>
-    <span className="sr-only">Loading…</span>
+  <div className="flex flex-col items-center justify-center min-h-screen bg-awaitsi-gray-950 gap-6" role="status" aria-live="polite">
+    <div className="flex gap-2">
+      <span className="w-2 h-2 rounded-full bg-awaitsi-green animate-bounce [animation-delay:0ms]" />
+      <span className="w-2 h-2 rounded-full bg-awaitsi-green animate-bounce [animation-delay:150ms]" />
+      <span className="w-2 h-2 rounded-full bg-awaitsi-green animate-bounce [animation-delay:300ms]" />
+    </div>
+    <span className="text-white/30 font-black text-[10px] uppercase tracking-[0.25em]">Loading</span>
   </div>
 );
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <AppContainer />,
-  },
-  {
-    path: '/test-main',
     element: <AppContainer />,
   },
   {
@@ -61,6 +66,46 @@ const router = createBrowserRouter([
     element: (
       <React.Suspense fallback={<LoadingFallback />}>
         <AsyncMobile />
+      </React.Suspense>
+    ),
+  },
+  {
+    path: '/portfolio/automation',
+    element: (
+      <React.Suspense fallback={<LoadingFallback />}>
+        <AsyncAutomation />
+      </React.Suspense>
+    ),
+  },
+  {
+    path: '/blog/*',
+    element: (
+      <React.Suspense fallback={<LoadingFallback />}>
+        <AsyncComingSoon title="Blog — Coming Soon" subtitle="Our content hub is under construction. Check back soon for industry insights and tech tips for SA businesses." />
+      </React.Suspense>
+    ),
+  },
+  {
+    path: '/privacy',
+    element: (
+      <React.Suspense fallback={<LoadingFallback />}>
+        <AsyncPrivacy />
+      </React.Suspense>
+    ),
+  },
+  {
+    path: '/terms',
+    element: (
+      <React.Suspense fallback={<LoadingFallback />}>
+        <AsyncTerms />
+      </React.Suspense>
+    ),
+  },
+  {
+    path: '*',
+    element: (
+      <React.Suspense fallback={<LoadingFallback />}>
+        <AsyncNotFound />
       </React.Suspense>
     ),
   },

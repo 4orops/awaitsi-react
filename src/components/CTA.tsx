@@ -1,44 +1,96 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, Sparkles } from 'lucide-react';
 
-const CTA: React.FC = () => {
+interface CTAProps {
+  onQuote: () => void;
+}
+
+const CTA: React.FC<CTAProps> = ({ onQuote }) => {
   return (
-    <section className="py-24 px-4 bg-gradient-to-r from-blue-900 to-cyan-600 relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
-          <pattern id="cta-pattern" patternUnits="userSpaceOnUse" width="10" height="10" viewBox="0 0 10 10">
-            <circle cx="1" cy="1" r="1" fill="white" />
-          </pattern>
-          <rect width="100%" height="100%" fill="url(#cta-pattern)" />
-        </svg>
-      </div>
+    <section className="bg-white overflow-hidden relative border-y border-awaitsi-gray-100">
+      {/* Light grid */}
+      <div className="absolute inset-0 line-grid-light pointer-events-none" />
 
-      <div className="max-w-5xl mx-auto text-center text-white relative z-10">
+      <div className="max-w-6xl mx-auto px-4 py-24 lg:py-36 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.7 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full mb-6 backdrop-blur-sm border border-white/20">
-            <Sparkles className="w-4 h-4 text-lime-400" />
-            <span className="text-sm font-semibold text-lime-400 uppercase tracking-wider">Start Your Transformation</span>
+          {/* Kicker */}
+          <div className="flex items-center gap-2 mb-10">
+            <span className="w-1.5 h-1.5 bg-awaitsi-green rounded-full animate-pulse" />
+            <span className="text-[10px] font-black text-awaitsi-gray-500 uppercase tracking-[0.25em]">
+              Scale Your Vision
+            </span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 font-montserrat leading-tight">
-            Ready to <span className="text-lime-400">Scale</span> Your Business?
-          </h2>
-          <p className="text-xl md:text-2xl mb-10 text-cyan-100 max-w-2xl mx-auto">
-            Let's discuss your vision — no obligation. We treat every project as part of our family legacy.
-          </p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-10 py-5 bg-lime-400 text-gray-900 font-bold text-lg rounded-xl hover:bg-lime-300 transition-all shadow-[0_0_30px_rgba(132,204,22,0.4)] flex items-center gap-3 mx-auto"
-          >
-            Request a Quote Today <ArrowRight className="w-5 h-5" />
-          </motion.button>
+
+          {/* Headline */}
+          <div className="overflow-hidden mb-4">
+            <motion.h2
+              initial={{ y: '100%' }}
+              whileInView={{ y: '0%' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+              className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black font-montserrat
+                         text-awaitsi-gray-900 tracking-[-0.03em] leading-[0.88]"
+            >
+              READY TO
+            </motion.h2>
+          </div>
+          <div className="overflow-hidden mb-14">
+            <motion.h2
+              initial={{ y: '100%' }}
+              whileInView={{ y: '0%' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.85, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+              className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black font-montserrat
+                         tracking-[-0.03em] leading-[0.88]"
+            >
+              <span className="text-transparent bg-clip-text bg-gradient-to-r
+                               from-awaitsi-blue to-awaitsi-cyan italic font-light">
+                grow bigger?
+              </span>
+            </motion.h2>
+          </div>
+
+          {/* Sub-row */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-10 border-t border-awaitsi-gray-100 pt-12">
+            <p className="text-base text-awaitsi-gray-500 max-w-md font-opensans leading-relaxed">
+              No corporate overhead, no hidden fees — just results-driven technology built
+              specifically for South African SMEs that want to scale.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 flex-shrink-0">
+              <motion.button
+                id="cta-primary-button"
+                onClick={onQuote}
+                whileHover={{ scale: 1.02, backgroundColor: '#76FF03' }}
+                whileTap={{ scale: 0.97 }}
+                className="group px-10 py-5 bg-awaitsi-gray-900 text-white font-black
+                           text-[11px] uppercase tracking-[0.22em] transition-colors duration-300
+                           flex items-center gap-3"
+              >
+                Request a Free Quote
+                <span className="inline-block transition-transform duration-300 group-hover:translate-x-2">
+                  →
+                </span>
+              </motion.button>
+
+              <motion.button
+                id="cta-portfolio-button"
+                onClick={() => document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' })}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                className="px-10 py-5 border border-awaitsi-gray-200 text-awaitsi-gray-700
+                           hover:bg-awaitsi-gray-900 hover:text-white hover:border-awaitsi-gray-900
+                           font-black text-[11px] uppercase tracking-[0.22em] transition-all duration-300"
+              >
+                View Our Work
+              </motion.button>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>

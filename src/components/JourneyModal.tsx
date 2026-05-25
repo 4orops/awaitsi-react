@@ -125,7 +125,7 @@ const Step2 = ({ data, updateData, onNext, onBack }: { data: FormData, updateDat
 };
 
 const Step3 = ({ data, updateData, onBack, onSubmit, isLoading }: { data: FormData, updateData: (k: keyof FormData, v: string) => void, onBack: () => void, onSubmit: () => void, isLoading: boolean }) => (
-    <div className="space-y-6 text-white h-[60vh] md:h-auto overflow-y-auto pr-2 custom-scrollbar">
+    <div className="space-y-6 text-white">
         <div>
             <h2 className="text-2xl font-bold font-montserrat mb-1">Final Details</h2>
             <p className="text-cyan-100/80">Step 3: Tell us a bit about you</p>
@@ -250,10 +250,42 @@ const JourneyModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => voi
 
     const onSubmit = async () => {
         setIsLoading(true);
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        setIsLoading(false);
-        setStep(4);
+        try {
+            const url = '/api/quote';
+            console.log('[QUOTE_REQUEST] Submitting to:', url, formData);
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const contentType = response.headers.get('content-type');
+            if (!response.ok) {
+                // If it's a 404/500 and not JSON, it might return HTML
+                if (contentType && contentType.includes('application/json')) {
+                    const errorResult = await response.json();
+                    throw new Error(errorResult.message || `Server error: ${response.status}`);
+                } else {
+                    throw new Error(`API Error: ${response.status} (${response.statusText})`);
+                }
+            }
+
+            if (!contentType || !contentType.includes('application/json')) {
+                throw new Error('Server returned non-JSON response. Check if backend is running.');
+            }
+
+            const result = await response.json();
+            console.log('[QUOTE_SUCCESS]', result);
+            setStep(4);
+        } catch (error) {
+            console.error('[QUOTE_ERROR]', error);
+            alert('Something went wrong. Please try again or contact us directly.');
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     const closeAndReset = () => {
@@ -282,7 +314,7 @@ const JourneyModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => voi
                         initial={{ scale: 0.95, opacity: 0, y: 20 }}
                         animate={{ scale: 1, opacity: 1, y: 0 }}
                         exit={{ scale: 0.95, opacity: 0, y: 20 }}
-                        className="relative bg-gradient-to-br from-blue-900 to-cyan-700 rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden border border-white/10"
+                        className="relative bg-gradient-to-br from-blue-900 to-cyan-700 rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-white/10 custom-scrollbar"
                     >
                         {/* Background Decorations */}
                         <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>

@@ -1,88 +1,134 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Heart, Users, TrendingUp, Sparkles } from 'lucide-react';
 
 const About: React.FC = () => {
   return (
-    <section id="about" className="py-24 px-4 bg-gradient-to-br from-cyan-50 to-blue-100 overflow-hidden relative">
-      <div className="absolute inset-0 bg-[radial-gradient(#06b6d4_1px,transparent_1px)] [background-size:20px_20px] opacity-[0.05]"></div>
-      <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-8 font-montserrat leading-tight">
-              Our Story & <br /><span className="text-lime-500">Family Values</span>
-            </h2>
-            <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-              Awaitsi was born from a simple belief: technology should not just be about profits, but about people, families, and communities.
-            </p>
-            <p className="text-lg text-gray-700 mb-10 leading-relaxed">
-              We want to build a business that creates opportunities, helps others grow, and lasts for generations. Our family values — trust, reliability, care, and honesty — guide every decision we make.
-            </p>
+    <section
+      id="about"
+      aria-label="About Awaitsi"
+      className="bg-awaitsi-gray-950 overflow-hidden border-t border-white/10"
+    >
 
-            <div className="grid grid-cols-2 gap-8">
+      {/* ── Header ── */}
+      <div className="border-b border-white/10 line-grid">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-6xl mx-auto px-4 py-20 lg:py-28"
+        >
+          <div className="flex items-center gap-2 mb-6">
+            <span className="w-1.5 h-1.5 bg-awaitsi-green rounded-full" />
+            <span className="text-[10px] font-black text-white/40 uppercase tracking-[0.25em]">
+              Our Story
+            </span>
+          </div>
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-white
+                         font-montserrat tracking-[-0.03em] leading-[0.9] max-w-3xl">
+            BUILT ON<br />
+            <span className="text-awaitsi-green italic font-light">family values</span>
+            {' &'}<br />
+            lasting legacy.
+          </h2>
+        </motion.div>
+      </div>
+
+      {/* ── Content Grid ── */}
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="grid lg:grid-cols-2 gap-px bg-white/10 border-x border-b border-white/10">
+
+          {/* Left: Story */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="bg-awaitsi-gray-950 p-10 lg:p-16 flex flex-col justify-between"
+          >
+            <div className="space-y-6 text-base text-white/50 font-opensans leading-relaxed">
+              <p className="text-white/80 text-lg">
+                Awaitsi was born from a simple belief: technology should not just be about profits,
+                but about{' '}
+                <span className="text-white font-bold">people, families, and communities.</span>
+              </p>
+              <p>
+                We want to build a business that creates opportunities, helps others grow, and
+                lasts for generations. Our family values — trust, reliability, care, and honesty —
+                guide every decision we make.
+              </p>
+              <p>
+                Based in South Africa, we're uniquely positioned to understand the nuances of the
+                local market, delivering solutions that are built for the African context.
+              </p>
+            </div>
+
+            {/* Core Values */}
+            <div className="mt-14 pt-10 border-t border-white/10">
+              <h4 className="text-[10px] font-black text-white/40 uppercase tracking-[0.25em] mb-8">
+                Our Core Values
+              </h4>
+              <div className="grid grid-cols-2 gap-px bg-white/10">
+                {[
+                  { label: 'Family First', desc: 'Every client is treated like family.' },
+                  { label: 'Community', desc: 'Creating local tech opportunities.' },
+                  { label: 'Legacy', desc: 'Built to last for generations.' },
+                  { label: 'Integrity', desc: 'Honesty in every interaction.' },
+                ].map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="group bg-awaitsi-gray-950 p-6 hover:bg-awaitsi-gray-800 transition-colors duration-300"
+                  >
+                    <h5 className="font-black font-montserrat text-white text-sm mb-2
+                                   group-hover:text-awaitsi-green transition-colors duration-300">
+                      {item.label}
+                    </h5>
+                    <p className="text-xs text-white/40 font-opensans leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right: Stats Grid */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="bg-awaitsi-gray-950"
+          >
+            <div className="grid grid-cols-2 gap-px bg-white/10 h-full">
               {[
-                { icon: <Heart className="w-6 h-6 text-lime-500" />, title: "Family First", desc: "Every client is family" },
-                { icon: <Users className="w-6 h-6 text-cyan-500" />, title: "Community", desc: "Creating opportunities" },
-                { icon: <TrendingUp className="w-6 h-6 text-lime-500" />, title: "Legacy", desc: "Built to last generations" },
-                { icon: <Sparkles className="w-6 h-6 text-cyan-500" />, title: "Innovation", desc: "Cutting-edge solutions" }
+                { stat: '50+', label: 'Local Businesses Served', accent: '#76FF03' },
+                { stat: '2–4wk', label: 'Average Delivery Time', accent: '#00BCD4' },
+                { stat: '99.9%', label: 'Guaranteed Uptime SLA', accent: '#76FF03' },
+                { stat: '100%', label: 'South African Founded', accent: '#00BCD4' },
               ].map((item, idx) => (
                 <motion.div
                   key={idx}
-                  whileHover={{ y: -5 }}
-                  className="flex items-start gap-4 p-4 rounded-xl hover:bg-gray-50 transition-colors duration-300"
+                  whileHover={{ backgroundColor: '#1A1A1A' }}
+                  className="bg-awaitsi-gray-950 p-10 lg:p-14 flex flex-col justify-end cursor-default group"
                 >
-                  <div className="mt-1 p-2 bg-gray-100 rounded-lg">{item.icon}</div>
-                  <div>
-                    <div className="font-bold text-blue-900 text-lg mb-1">{item.title}</div>
-                    <div className="text-sm text-gray-600 font-medium">{item.desc}</div>
-                  </div>
+                  <span
+                    className="text-5xl md:text-6xl font-black font-montserrat leading-none
+                               mb-4 transition-all duration-500 group-hover:-translate-y-1"
+                    style={{ color: item.accent }}
+                  >
+                    {item.stat}
+                  </span>
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 leading-snug">
+                    {item.label}
+                  </span>
                 </motion.div>
               ))}
             </div>
           </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative"
-          >
-            <div className="absolute inset-0 opacity-30">
-              <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
-                <defs>
-                  <pattern id="about-pattern" patternUnits="userSpaceOnUse" width="20" height="20" viewBox="0 0 10 10">
-                    <path d="M-1,1 l2,-2 M0,10 l10,-10 M9,11 l2,-2" stroke="#76FF03" strokeWidth="0.5"></path>
-                  </pattern>
-                </defs>
-                <rect x="0" y="0" width="100%" height="100%" fill="url(#about-pattern)"></rect>
-              </svg>
-            </div>
-            <div className="relative z-10 w-full aspect-square bg-gradient-to-br from-lime-400 to-cyan-500 rounded-[2rem] shadow-2xl overflow-hidden group">
-              <div className="absolute inset-0 bg-white/10 backdrop-blur-sm flex items-center justify-center">
-                <Users className="w-48 h-48 text-white/90 drop-shadow-xl transform group-hover:scale-110 transition-transform duration-700" />
-              </div>
-
-              {/* Floating elements */}
-              <motion.div
-                animate={{ y: [0, -20, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-10 right-10 w-20 h-20 bg-white/20 rounded-full blur-xl"
-              />
-              <motion.div
-                animate={{ y: [0, 20, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute bottom-10 left-10 w-32 h-32 bg-blue-900/10 rounded-full blur-xl"
-              />
-            </div>
-          </motion.div>
         </div>
       </div>
+
+      <div className="max-w-6xl mx-auto px-4 py-10" />
     </section>
   );
 };

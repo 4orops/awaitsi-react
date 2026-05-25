@@ -24,10 +24,10 @@ const LearnMoreModal: React.FC<LearnMoreModalProps> = ({ isOpen, onClose }) => {
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden"
+                        className="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-y-auto max-h-[90vh] custom-scrollbar"
                     >
                         {/* Header */}
-                        <div className="bg-gradient-to-r from-blue-900 to-cyan-600 p-6 text-white relative">
+                        <div className="bg-gradient-to-r from-blue-900 to-cyan-600 p-6 text-white relative sticky top-0 z-20">
                             <button
                                 onClick={onClose}
                                 className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 rounded-full transition"
@@ -39,7 +39,7 @@ const LearnMoreModal: React.FC<LearnMoreModalProps> = ({ isOpen, onClose }) => {
                         </div>
 
                         {/* Content */}
-                        <div className="p-8 max-h-[70vh] overflow-y-auto">
+                        <div className="p-8">
                             <div className="space-y-8">
 
                                 <section className="flex gap-4">

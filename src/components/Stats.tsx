@@ -3,7 +3,7 @@ import CountUp from 'react-countup';
 import { motion } from 'motion/react';
 import { useInView } from 'react-intersection-observer';
 
-interface Stat {
+export interface Stat {
   number: string;
   label: string;
 }
@@ -19,36 +19,32 @@ const Stats: React.FC<StatsProps> = ({ stats }) => {
   });
 
   return (
-    <section className="py-24 bg-blue-900 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-      <div className="absolute bottom-0 left-0 w-64 h-64 bg-lime-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+    <section className="py-24 bg-awaitsi-blue relative overflow-hidden mesh-gradient">
+      <div className="absolute inset-0 bg-awaitsi-blue/40 backdrop-blur-[1px]" />
 
       <div className="max-w-7xl mx-auto px-4 relative z-10" ref={ref}>
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-12">
           {stats.map((stat, idx) => {
-            // Extract numeric value if possible, default to 0
             const numValue = parseInt(stat.number.replace(/[^0-9]/g, '')) || 0;
-            // Extract suffix (e.g., 'M', 'B+', etc.)
             const suffix = stat.number.replace(/[0-9]/g, '');
 
             return (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: idx * 0.2, duration: 0.6 }}
-                className="text-center group p-8 rounded-3xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-lime-400/30 transition-all duration-300"
+                transition={{ delay: idx * 0.2, duration: 0.8 }}
+                className="text-center group p-10 rounded-[2.5rem] glass-card border-white/10 hover:border-awaitsi-green/30 transition-all duration-500 shadow-premium"
               >
-                <div className="text-5xl font-bold text-white mb-3 font-montserrat flex justify-center items-center gap-1 group-hover:text-lime-400 transition-colors drop-shadow-lg">
+                <div className="text-6xl font-bold text-white mb-4 font-montserrat flex justify-center items-center gap-1 group-hover:text-awaitsi-green transition-colors drop-shadow-glow">
                   {inView ? (
-                    <CountUp end={numValue} duration={2.5} separator="," />
+                    <CountUp end={numValue} duration={3} separator="," />
                   ) : (
                     '0'
                   )}
-                  <span>{suffix}</span>
+                  <span className="text-awaitsi-cyan group-hover:text-awaitsi-green transition-colors">{suffix}</span>
                 </div>
-                <div className="text-cyan-200 font-semibold tracking-wider uppercase text-sm">
+                <div className="text-awaitsi-cyan-light font-bold tracking-[0.2em] uppercase text-xs font-montserrat opacity-80 group-hover:opacity-100 transition-opacity">
                   {stat.label}
                 </div>
               </motion.div>

@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"vite\" \"npm run start:api\"",
-    "start:api": "node server.mjs",
+    "start:api": "node --watch server.mjs",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.101.1",
     "@tailwindcss/postcss": "^4.1.14",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
+    "@playwright/test": "^1.60.0",
     "@types/node": "^24.10.1",
     "@types/react": "^19.1.16",
     "@types/react-dom": "^19.1.9",
