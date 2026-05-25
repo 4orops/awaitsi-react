@@ -1,5 +1,5 @@
- * 3. Return a consistent response for the frontend
- */
+//  * 3. Return a consistent response for the frontend
+//  */
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = process.env.SUPABASE_URL;
