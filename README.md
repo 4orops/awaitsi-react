@@ -20,30 +20,31 @@ Awaitsi is a family-oriented South African technology company specializing in:
 
 ## Project Structure
 
-The project follows a modular architecture to separate core website logic from portfolio projects.
+The project follows a modular React 19 architecture:
 
 ```
 /
-├── api/                  # Backend implementation (future expansion)
-├── public/               # Static assets
+├── netlify/functions/    # Production serverless functions (contact, quote)
+├── public/               # Public assets and branding
 ├── src/
-│   ├── components/       # Shared UI components (Hero, Navigation, etc.)
-│   ├── containers/       # Smart components managing page logic
-│   ├── pages/            # Page layouts
-│   ├── projects/         # Modular portfolio sub-projects
-│   │   ├── ai/
-│   │   ├── crm/
-│   │   ├── mobile/
-│   │   ├── real-estate/
-│   │   └── salon/
-│   └── routes/           # Centralized routing configuration
-├── server.mjs            # Local development backend server
-├── netlify.toml          # Netlify deployment configuration
+│   ├── components/       # Shared UI components (Navigation, Footer, SEO, Modals)
+│   ├── data/             # Service and business content definitions
+│   ├── pages/            # Page views (Home, Pillars, Case Studies, Contact, Assessment)
+│   ├── routes/           # Centralized React Router configuration
+│   └── utils/            # Shared client API helpers
+├── supabase/             # Database schemas and DDL scripts
+├── tests/                # Playwright end-to-end and API test suites
+├── server.mjs            # Local development backend server (Express)
+├── netlify.toml          # Netlify routing and deployment configuration
+└── playwright.config.ts  # Playwright automated test configuration
 ```
 
 ### Architecture Highlights
-- **Lazy Loading**: Portfolio projects (`src/projects/*`) are lazy-loaded to improve initial load performance.
-- **Suspense**: Routes are protected with `React.Suspense` to ensure smooth transitions and prevent crashes during loading.
+- **Service Pillars**: Dedicated pages for Digital Systems, Business Systems, Data Intelligence, AI Automation, and Digital Transformation.
+- **Interactive Tools**: Built-in Digital Maturity Assessment and consultation scheduling.
+- **Unified API Client**: Standardized submission handling for contact inquiries and quotations across local Express and Netlify serverless.
+- **Suspense & Code Splitting**: Routes are dynamically imported with `React.lazy` and wrapped in `React.Suspense` with an editorial loading state.
+
 
 ## Getting Started
 

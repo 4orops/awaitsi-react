@@ -50,24 +50,26 @@ export const handler = async (event) => {
         console.log(`Interest: ${projectType || 'General'}`);
         console.log(`Message: ${message || description}`);
 
-        // 3. Store in Supabase
+        // 3. Store in Supabase — insert into 'messages' table
         const { error: dbError } = await supabase
-            .from('quotes')
+            .from('messages')
             .insert([
                 {
                     name,
                     email,
-                    phone,
-                    project_type: projectType,
-                    description: message || description,
-                    business_stage: businessStage,
-                    budget: budget
+                    phone: phone || null,
+                    project_type: projectType || null,
+                    message: message || description,
                 }
             ]);
 
         if (dbError) {
             console.error('[SUPABASE_ERROR]', dbError);
-            // We still log it but maybe we don't fail the entire response if we want to be resilient
+            return {
+                statusCode: 500,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: 'Failed to save your message. Please try again or email info@awaitsi.co.za.' }),
+            };
         }
 
         return {

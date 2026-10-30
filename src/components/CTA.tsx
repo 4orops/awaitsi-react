@@ -77,18 +77,6 @@ const CTA: React.FC<CTAProps> = ({ onQuote }) => {
                   →
                 </span>
               </motion.button>
-
-              <motion.button
-                id="cta-portfolio-button"
-                onClick={() => document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' })}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.97 }}
-                className="px-10 py-5 border border-awaitsi-gray-200 text-awaitsi-gray-700
-                           hover:bg-awaitsi-gray-900 hover:text-white hover:border-awaitsi-gray-900
-                           font-black text-[11px] uppercase tracking-[0.22em] transition-all duration-300"
-              >
-                View Our Work
-              </motion.button>
             </div>
           </div>
         </motion.div>

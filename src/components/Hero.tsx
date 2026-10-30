@@ -1,180 +1,151 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Sparkles, ArrowRight, ShieldCheck, Award, HeartHandshake } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface HeroProps {
   onQuote: () => void;
-  onLearnMore: () => void;
+  onLearnMore?: () => void;
 }
 
-const Hero: React.FC<HeroProps> = ({ onQuote, onLearnMore }) => {
+const Hero: React.FC<HeroProps> = ({ onQuote }) => {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end start'],
   });
 
-  // Subtle parallax: text rises slightly slower than scroll
   const textY = useTransform(scrollYProgress, [0, 1], ['0%', '18%']);
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-
-  const headingVariants = {
-    hidden: { y: '110%' },
-    visible: (i: number) => ({
-      y: '0%',
-      transition: { duration: 0.9, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] },
-    }),
-  };
 
   return (
     <section
       id="home"
       ref={sectionRef}
-      aria-label="Hero — Awaitsi Digital Agency"
-      className="relative min-h-screen flex flex-col justify-center bg-awaitsi-gray-950 overflow-hidden"
+      aria-label="Hero — Awaitsi (Pty) Ltd"
+      className="relative min-h-[92vh] flex flex-col justify-center bg-awaitsi-gray-950 overflow-hidden pt-28 pb-16"
     >
-      {/* ── Background: Strict Line Grid ── */}
-      <div className="absolute inset-0 line-grid [mask-image:radial-gradient(ellipse_80%_70%_at_50%_50%,#000_50%,transparent_100%)]" />
+      {/* Mesh line grid background */}
+      <div className="absolute inset-0 line-grid opacity-70 [mask-image:radial-gradient(ellipse_80%_70%_at_50%_40%,#000_60%,transparent_100%)]" />
 
-      {/* ── Background: Accent Glow ── */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px]
-                      bg-awaitsi-cyan/[0.04] rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px]
-                      bg-awaitsi-green/[0.03] rounded-full blur-[100px] pointer-events-none" />
-
-      {/* ── Horizontal hairline rule ── */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-white/10" />
+      {/* Subtle ambient lighting */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] bg-awaitsi-cyan/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-awaitsi-green/10 rounded-full blur-[130px] pointer-events-none" />
 
       <motion.div
         style={{ y: textY, opacity }}
-        className="relative z-10 w-full px-4 pt-28 pb-16 lg:pt-40 lg:pb-28"
+        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full"
       >
-        <div className="max-w-7xl mx-auto">
+        {/* Kicker Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-6"
+        >
+          <span className="w-2 h-2 rounded-full bg-awaitsi-green animate-pulse" />
+          <span className="text-white/80 font-bold tracking-widest text-[11px] uppercase">
+            Awaitsi (Pty) Ltd — South African Technology Company
+          </span>
+        </motion.div>
 
-          {/* ── Kicker Badge ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: 'easeOut' }}
-            className="mb-10 flex items-center gap-4"
+        {/* Main Headline */}
+        <motion.h1
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-montserrat text-white tracking-tight leading-[1.1] max-w-5xl"
+        >
+          Building Technology with{' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-awaitsi-green via-awaitsi-cyan to-white">
+            Heart for Generations
+          </span>{' '}
+          to Come.
+        </motion.h1>
+
+        {/* Vision & Description Subtext */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="mt-6 text-lg sm:text-xl text-white/70 max-w-3xl leading-relaxed font-opensans"
+        >
+          We build practical digital solutions that help businesses solve real challenges, improve operational efficiency, and unlock new opportunities for long-term growth.
+        </motion.p>
+
+        {/* Action Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-4"
+        >
+          <button
+            id="hero-book-consultation"
+            onClick={onQuote}
+            className="px-8 py-4 bg-awaitsi-green text-awaitsi-gray-950 font-extrabold text-xs uppercase tracking-widest rounded-xl hover:bg-awaitsi-green-light transition-all flex items-center justify-center gap-3 shadow-glow-green"
           >
-            <div className="flex items-center gap-2 px-4 py-2 border border-white/10 bg-white/5 backdrop-blur-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-awaitsi-green animate-pulse" />
-              <span className="text-white/60 font-bold tracking-[0.22em] text-[10px] uppercase">
-                South Africa's Premier Boutique Tech Agency
-              </span>
-            </div>
-            <div className="hidden md:block h-px flex-1 max-w-[120px] bg-white/10" />
-          </motion.div>
+            <Sparkles className="w-4 h-4" />
+            <span>Book a Consultation</span>
+          </button>
 
-          {/* ── Massive Typographic Heading ── */}
-          <div className="mb-8 md:mb-12 overflow-visible">
-            <div className="overflow-hidden mb-1 md:mb-2">
-              <motion.h1
-                custom={0}
-                variants={headingVariants}
-                initial="hidden"
-                animate="visible"
-                className="text-[14.5vw] md:text-[11vw] lg:text-[10rem] xl:text-[11rem] font-black
-                           font-montserrat leading-[0.88] text-white tracking-[-0.03em] select-none"
-              >
-                WE BUILD
-              </motion.h1>
+          <Link
+            to="/about"
+            className="px-8 py-4 bg-white/5 border border-white/15 text-white font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-white/10 hover:border-white/30 transition-all flex items-center justify-center gap-2"
+          >
+            <span>Explore Our Story</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </motion.div>
+
+        {/* Trust Badges */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="mt-14 pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-6 text-white/70"
+        >
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-lg bg-awaitsi-green/10 border border-awaitsi-green/30 text-awaitsi-green">
+              <ShieldCheck className="w-5 h-5" />
             </div>
-            <div className="overflow-hidden">
-              <motion.div
-                custom={1}
-                variants={headingVariants}
-                initial="hidden"
-                animate="visible"
-                className="text-[14.5vw] md:text-[11vw] lg:text-[10rem] xl:text-[11rem] font-black
-                           font-montserrat leading-[0.88] tracking-[-0.03em] flex flex-wrap
-                           items-baseline gap-x-5 select-none"
-              >
-                <span className="text-white">DIGITAL</span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r
-                                 from-awaitsi-green to-awaitsi-cyan italic">
-                  LEGACIES
-                </span>
-              </motion.div>
+            <div>
+              <div className="font-bold text-sm text-white font-montserrat">Purpose-Driven</div>
+              <div className="text-xs text-white/50">Solving Real Challenges</div>
             </div>
           </div>
 
-          {/* ── Horizontal divider ── */}
-          <motion.div
-            initial={{ scaleX: 0, originX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="h-px w-full max-w-2xl bg-white/10 mb-10"
-          />
-
-          {/* ── Sub-row: Body text + CTAs ── */}
-          <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-10">
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.65 }}
-              className="text-base md:text-lg text-white/50 max-w-md leading-relaxed font-opensans"
-            >
-              Bespoke web development, custom CRM systems, and AI automation
-              for SMEs.{' '}
-              <span className="text-white/80">
-                Precision engineering meets editorial design.
-              </span>
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="flex flex-col sm:flex-row gap-4 flex-shrink-0"
-            >
-              <button
-                id="hero-cta-primary"
-                onClick={onQuote}
-                className="group px-10 py-5 bg-white text-awaitsi-gray-900 hover:bg-awaitsi-green
-                           transition-colors duration-300 font-black tracking-[0.18em] uppercase text-[11px]
-                           flex items-center gap-3"
-              >
-                Start a Project
-                <span className="inline-block transition-transform duration-300 group-hover:translate-x-2">
-                  →
-                </span>
-              </button>
-              <button
-                id="hero-cta-secondary"
-                onClick={onLearnMore}
-                className="group px-10 py-5 border border-white/15 text-white/70 hover:text-white
-                           hover:border-white/30 hover:bg-white/5 transition-all duration-300
-                           font-bold tracking-[0.18em] uppercase text-[11px]"
-              >
-                View Our Work
-              </button>
-            </motion.div>
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-lg bg-awaitsi-cyan/10 border border-awaitsi-cyan/30 text-awaitsi-cyan">
+              <Award className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="font-bold text-sm text-white font-montserrat">Enterprise Standards</div>
+              <div className="text-xs text-white/50">Modern Clean Architecture</div>
+            </div>
           </div>
 
-          {/* ── Scroll Indicator ── */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.4 }}
-            className="mt-20 lg:mt-28 flex items-center gap-4"
-          >
-            <div className="flex flex-col items-center gap-1">
-              <motion.div
-                animate={{ y: [0, 6, 0] }}
-                transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
-                className="w-px h-10 bg-gradient-to-b from-white/0 via-white/30 to-white/0"
-              />
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-lg bg-awaitsi-green/10 border border-awaitsi-green/30 text-awaitsi-green">
+              <HeartHandshake className="w-5 h-5" />
             </div>
-            <span className="text-white/30 font-bold tracking-[0.25em] text-[10px] uppercase">
-              Scroll to explore
-            </span>
-          </motion.div>
-        </div>
+            <div>
+              <div className="font-bold text-sm text-white font-montserrat">Long-Term Partner</div>
+              <div className="text-xs text-white/50">Support & Continuous Growth</div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-lg bg-awaitsi-cyan/10 border border-awaitsi-cyan/30 text-awaitsi-cyan">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="font-bold text-sm text-white font-montserrat">South African SMEs</div>
+              <div className="text-xs text-white/50">Tailored Practical Tech</div>
+            </div>
+          </div>
+        </motion.div>
       </motion.div>
-
-      {/* ── Bottom hairline ── */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-white/10" />
     </section>
   );
 };

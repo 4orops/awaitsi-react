@@ -1,7 +1,15 @@
 [functions]
   directory = "netlify/functions"
 
+# Direct API routes to Netlify Functions
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# Client-side routing: forward all other requests to index.html
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
