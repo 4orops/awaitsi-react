@@ -28,6 +28,7 @@ const AsyncContact = React.lazy(() => import('../pages/ContactPage'));
 
 // Insights / Legacy (Keep Insights, privacy, terms)
 const AsyncInsights = React.lazy(() => import('../pages/InsightsPage'));
+const AsyncInsightArticle = React.lazy(() => import('../pages/InsightArticlePage'));
 const AsyncPrivacy = React.lazy(() => import('../pages/PrivacyPolicyPage'));
 const AsyncTerms = React.lazy(() => import('../pages/TermsPage'));
 const AsyncNotFound = React.lazy(() => import('../pages/NotFoundPage'));
@@ -123,8 +124,9 @@ const router = createBrowserRouter([
     element: <Suspense><AsyncInsights /></Suspense>,
   },
   {
-    path: '/insights/*',
-    element: <Suspense><AsyncInsights /></Suspense>,
+    // Unknown slugs render the 404 page from inside InsightArticlePage.
+    path: '/insights/:slug',
+    element: <Suspense><AsyncInsightArticle /></Suspense>,
   },
 
   // ── Legal ──

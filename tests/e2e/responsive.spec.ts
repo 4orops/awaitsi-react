@@ -8,30 +8,26 @@ const viewports = [
   { name: 'Mobile Small', width: 375, height: 667 },
 ];
 
+const hasHorizontalOverflow = (page: import('@playwright/test').Page) =>
+  page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
+
 test.describe('Responsive Layout & Viewport Tests', () => {
   for (const vp of viewports) {
     test(`[${vp.name} ${vp.width}x${vp.height}] Homepage loads without horizontal overflow`, async ({ page }) => {
       await page.setViewportSize({ width: vp.width, height: vp.height });
       await page.goto('/');
-      await page.waitForLoadState('networkidle');
-
-      // Wait for framer-motion h1 to animate in
       await expect(page.locator('h1').first()).toBeVisible({ timeout: 20000 });
 
-      // Check no horizontal overflow
-      const overflow = await page.evaluate(() => {
-        return document.documentElement.scrollWidth > window.innerWidth;
-      });
-      expect(overflow).toBe(false);
+      expect(await hasHorizontalOverflow(page)).toBe(false);
 
+      const toggle = page.getByRole('button', { name: 'Toggle Navigation Menu' });
+      const desktopAbout = page.locator('nav[aria-label="Main navigation"] .hidden.lg\\:flex a[href="/about"]');
       if (vp.width < 1024) {
-        // Mobile/tablet: hamburger menu button should be visible
-        await expect(page.locator('#mobile-menu-toggle-btn')).toBeVisible({ timeout: 5000 });
-        // Desktop nav links should NOT be visible (hidden on small screens)
-        await expect(page.locator('nav .hidden.lg\\:flex')).not.toBeVisible();
+        await expect(toggle).toBeVisible({ timeout: 5000 });
+        await expect(desktopAbout).not.toBeVisible();
       } else {
-        // Desktop: nav links should be visible
-        await expect(page.locator('nav a[href="/about"]').first()).toBeVisible({ timeout: 5000 });
+        await expect(toggle).not.toBeVisible();
+        await expect(desktopAbout).toBeVisible({ timeout: 5000 });
       }
     });
   }
@@ -39,30 +35,23 @@ test.describe('Responsive Layout & Viewport Tests', () => {
   test('Mobile menu opens and closes correctly at 390x844', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
 
-    const toggleBtn = page.locator('#mobile-menu-toggle-btn');
-    await expect(toggleBtn).toBeVisible({ timeout: 10000 });
+    const toggle = page.getByRole('button', { name: 'Toggle Navigation Menu' });
+    await expect(toggle).toBeVisible({ timeout: 10000 });
 
-    // Open menu
-    await toggleBtn.click();
-    // The mobile drawer has links
-    await expect(page.locator('a[href="/contact"]').first()).toBeVisible({ timeout: 5000 });
-
-    // Close menu
-    await toggleBtn.click();
-    // Nav links should be gone from visible area
-    await expect(page.locator('#mobile-menu-toggle-btn')).toBeVisible();
+    const mobileAbout = page.locator('nav[aria-label="Main navigation"]').getByRole('link', { name: 'About', exact: true });
+    await toggle.click();
+    await expect(mobileAbout).toBeVisible({ timeout: 5000 });
+    await toggle.click();
+    await expect(mobileAbout).not.toBeVisible({ timeout: 5000 });
   });
 
-  test('Contact page has no horizontal overflow at mobile width', async ({ page }) => {
-    await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto('/contact');
-    await page.waitForLoadState('networkidle');
-
-    const overflow = await page.evaluate(() => {
-      return document.documentElement.scrollWidth > window.innerWidth;
+  for (const path of ['/contact', '/insights', '/insights/where-professionalism-meets-every-journey']) {
+    test(`${path} has no horizontal overflow at mobile width`, async ({ page }) => {
+      await page.setViewportSize({ width: 375, height: 667 });
+      await page.goto(path);
+      await expect(page.locator('h1').first()).toBeVisible({ timeout: 20000 });
+      expect(await hasHorizontalOverflow(page)).toBe(false);
     });
-    expect(overflow).toBe(false);
-  });
+  }
 });
