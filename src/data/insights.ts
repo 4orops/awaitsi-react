@@ -105,7 +105,7 @@ Kingspath is one of many South African SMEs that are excellent at what they do b
       { label: 'Contact Awaitsi', to: '/contact' },
     ],
     body: `
-Small and medium-sized businesses are the backbone of South Africa's economy. There are nearly 3 million of them, and by industry estimates they provide more than 60% of the country's jobs and around a third of GDP. Yet many of them still run on paper diaries, WhatsApp threads and spreadsheets that only one person understands. At Awaitsi, based in Bloemfontein, our mission is simple: modernise South Africa's SMEs with fast, affordable, human-centred digital solutions.
+Small and medium-sized businesses are the backbone of South Africa's economy. There are nearly 3 million of them, and by industry estimates they provide more than 60% of the country's jobs and around a third of GDP. Yet many of them still run on paper diaries, WhatsApp threads and spreadsheets that only one person understands. At Awaitsi, our mission is simple: modernise South Africa's SMEs with fast, affordable, human-centred digital solutions.
 
 ## The problems we are solving
 
