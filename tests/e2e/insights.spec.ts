@@ -2,16 +2,16 @@ import { test, expect } from '@playwright/test';
 
 const ARTICLES = [
   {
-    slug: 'where-professionalism-meets-every-journey',
-    title: 'Where Professionalism Meets Every Journey',
-    firstSentence: 'You never really notice good transport.',
-    lastLine: 'Book online at kingspathtransport.co.za.',
+    slug: 'putting-kingspath-transport-on-the-road-online',
+    title: 'Case Study: Putting Kingspath Transport on the Road Online',
+    firstSentence: 'At Awaitsi, we believe a great South African SME deserves a website that works as hard as it does.',
+    lastLine: 'See the live site at kingspathtransport.co.za, and start your project at awaitsi.co.za.',
     headings: [
-      'The problems we solve',
-      'Our services',
-      'An example: a Pretoria company hosting visiting clients',
-      'Why choose Kingspath',
-      'Book your next journey',
+      'The client',
+      'The challenge',
+      'What Awaitsi built',
+      'The result',
+      'Is your business next?',
     ],
   },
   {
@@ -28,6 +28,7 @@ const ARTICLES = [
 ];
 
 const OLD_TITLES = [
+  'Where Professionalism Meets Every Journey',
   'Why Every South African SME Needs a Professional Website in 2026',
   'Custom Website vs Website Builder Template',
   'Page Speed is a Business Problem',
@@ -91,6 +92,13 @@ test.describe('Insights', () => {
     // Canonical/structured data from the article do not leak to other pages
     await page.goto('/about');
     await expect(page.locator('#awaitsi-page-jsonld')).toHaveCount(0);
+  });
+
+  test('case study renders the italic tagline without raw markdown', async ({ page }) => {
+    await page.goto(`/insights/${ARTICLES[0].slug}`);
+    const article = page.locator('article[aria-labelledby="article-title"]');
+    await expect(article.locator('em')).toHaveText('"Where Professionalism Meets Every Journey."');
+    await expect(article).not.toContainText('*');
   });
 
   test('unknown article slug shows 404', async ({ page }) => {

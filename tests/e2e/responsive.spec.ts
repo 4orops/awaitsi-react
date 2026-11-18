@@ -46,7 +46,7 @@ test.describe('Responsive Layout & Viewport Tests', () => {
     await expect(mobileAbout).not.toBeVisible({ timeout: 5000 });
   });
 
-  for (const path of ['/contact', '/insights', '/insights/where-professionalism-meets-every-journey']) {
+  for (const path of ['/contact', '/insights', '/insights/putting-kingspath-transport-on-the-road-online']) {
     test(`${path} has no horizontal overflow at mobile width`, async ({ page }) => {
       await page.setViewportSize({ width: 375, height: 667 });
       await page.goto(path);
