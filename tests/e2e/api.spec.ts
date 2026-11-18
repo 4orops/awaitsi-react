@@ -43,7 +43,11 @@ test.describe('Backend API & Network Tests', () => {
     expect(response.status()).toBe(400);
   });
 
+  // The two tests below insert real rows when Supabase is configured, so they
+  // only run when explicitly enabled (e.g. against a test database):
+  //   E2E_ALLOW_DB_WRITES=1 npx playwright test tests/e2e/api.spec.ts
   test('POST /api/contact accepts valid payload (200 or 500 based on DB)', async ({ request }) => {
+    test.skip(!process.env.E2E_ALLOW_DB_WRITES, 'Writes to the database; set E2E_ALLOW_DB_WRITES=1 to run.');
     const response = await request.post(`${BACKEND}/api/contact`, {
       data: {
         name: 'QA Test User',
@@ -61,6 +65,7 @@ test.describe('Backend API & Network Tests', () => {
   });
 
   test('POST /api/quote accepts valid payload (200 or 500 based on DB)', async ({ request }) => {
+    test.skip(!process.env.E2E_ALLOW_DB_WRITES, 'Writes to the database; set E2E_ALLOW_DB_WRITES=1 to run.');
     const response = await request.post(`${BACKEND}/api/quote`, {
       data: {
         projectType: 'Website Development',

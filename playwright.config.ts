@@ -78,10 +78,21 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  webServer: {
-    command: 'npm run dev',
-    url: 'http://localhost:5173',
-    reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000,
-  },
+  // Two servers so tests wait for both the site and the API to be ready.
+  // The site is served from a production build (vite preview proxies /api
+  // like the dev server) so pages don't stall on on-demand compilation.
+  webServer: [
+    {
+      command: 'npm run build && npx vite preview --port 5173 --strictPort',
+      url: 'http://localhost:5173',
+      reuseExistingServer: !process.env.CI,
+      timeout: 300 * 1000,
+    },
+    {
+      command: 'node server.mjs',
+      url: 'http://localhost:3001/api/health',
+      reuseExistingServer: !process.env.CI,
+      timeout: 120 * 1000,
+    },
+  ],
 });

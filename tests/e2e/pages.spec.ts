@@ -1,69 +1,51 @@
 import { test, expect } from '@playwright/test';
 
+// Every routed page in src/routes/index.tsx with text from its <h1>.
 const routes = [
-  { path: '/', headingContains: /Building Technology|Awaitsi/i },
-  { path: '/about', headingContains: /About|Story|Awaitsi/i },
-  { path: '/services', headingContains: /Service/i },
-  { path: '/services/business-websites', headingContains: /Business Websites/i },
-  { path: '/services/custom-web-applications', headingContains: /Custom Web Applications/i },
-  { path: '/services/website-maintenance', headingContains: /Website Maintenance/i },
-  { path: '/services/technical-support', headingContains: /Technical Support/i },
-  { path: '/services/hosting-assistance', headingContains: /Hosting Assistance/i },
-  { path: '/case-studies', headingContains: /Case Stud/i },
-  { path: '/case-studies/kingspath-transport', headingContains: /Kingspath/i },
-  { path: '/case-studies/le2-memorials', headingContains: /LE2/i },
-  { path: '/our-process', headingContains: /Process/i },
-  { path: '/industries', headingContains: /Industr/i },
-  { path: '/why-technology-matters', headingContains: /Technology|Tech/i },
-  { path: '/insights', headingContains: /Insight/i },
-  { path: '/careers', headingContains: /Career|Team/i },
-  { path: '/contact', headingContains: /Contact|Start|Project/i },
-  { path: '/privacy', headingContains: /Privacy/i },
-  { path: '/terms', headingContains: /Terms/i },
+  { path: '/', heading: /Build a Smarter Business/i },
+  { path: '/about', heading: /Building Technology with Heart/i },
+  { path: '/services/digital-systems', heading: /Digital Systems/i },
+  { path: '/services/business-systems', heading: /Business Systems/i },
+  { path: '/services/data-intelligence', heading: /Data & Intelligence/i },
+  { path: '/services/ai-automation', heading: /AI & Automation/i },
+  { path: '/services/digital-transformation', heading: /Digital Transformation/i },
+  { path: '/business-cloud', heading: /Awaitsi Business Cloud/i },
+  { path: '/approach', heading: /Our Approach/i },
+  { path: '/work', heading: /Case Studies/i },
+  { path: '/work/kingspath-transport', heading: /Kingspath Transport/i },
+  { path: '/work/le2-memorials', heading: /LE2 Memorials/i },
+  { path: '/digital-assessment', heading: /How Digital is Your Business/i },
+  { path: '/insights', heading: /Insights/i },
+  { path: '/contact', heading: /Start Your Digital Transformation/i },
+  { path: '/privacy', heading: /Privacy/i },
+  { path: '/terms', heading: /Terms/i },
 ];
 
 test.describe('Page-by-Page Audit', () => {
   for (const r of routes) {
-    test(`Page ${r.path} loads cleanly with h1 visible`, async ({ page }) => {
+    test(`Page ${r.path} loads cleanly with its h1`, async ({ page }) => {
       const consoleErrors: string[] = [];
-      page.on('console', msg => {
-        // Filter out known benign warnings
-        if (msg.type() === 'error' && !msg.text().includes('[QUOTE_ERROR]') && !msg.text().includes('Failed to load resource')) {
+      page.on('console', (msg) => {
+        if (msg.type() === 'error' && !msg.text().includes('Failed to load resource')) {
           consoleErrors.push(msg.text());
         }
       });
+      page.on('pageerror', (err) => consoleErrors.push(err.message));
 
       await page.goto(r.path);
-      await page.waitForLoadState('networkidle');
-      await expect(page.locator('h1').first()).toBeVisible({ timeout: 20000 });
+      await expect(page.locator('h1').first()).toContainText(r.heading, { timeout: 20000 });
 
-      // Reload test
+      // Deep link survives a reload
       await page.reload();
-      await page.waitForLoadState('networkidle');
-      await expect(page.locator('h1').first()).toBeVisible({ timeout: 20000 });
+      await expect(page.locator('h1').first()).toContainText(r.heading, { timeout: 20000 });
 
-      // No unexpected JS errors
       expect(consoleErrors).toEqual([]);
     });
   }
 
   test('Non-existent route shows 404 page with correct content', async ({ page }) => {
     await page.goto('/unknown-qa-test-route-12345');
-    await page.waitForLoadState('networkidle');
-
-    // 404 page has h1 "Page Not Found"
     await expect(page.locator('h1').first()).toContainText('Page Not Found', { timeout: 15000 });
-
-    // Back to home link exists
-    const homeLink = page.locator('#not-found-home-link');
-    await expect(homeLink).toBeVisible();
-  });
-
-  test('Invalid /services slug redirects to /services', async ({ page }) => {
-    await page.goto('/services/non-existent-service');
-    await page.waitForLoadState('networkidle');
-    // ServiceDetailPage redirects to /services for unknown slugs
-    await expect(page).toHaveURL(/\/services/);
-    await expect(page.locator('h1').first()).toBeVisible({ timeout: 15000 });
+    await expect(page.locator('#not-found-home-link')).toBeVisible();
   });
 });

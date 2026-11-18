@@ -1,97 +1,70 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Navigation & Link Verification Tests', () => {
-  test('Navbar logo link is visible and clickable', async ({ page }) => {
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
+const mainNav = (page: import('@playwright/test').Page) => page.locator('nav[aria-label="Main navigation"]');
 
-    // Logo image inside a link to '/'
-    const logo = page.locator('nav img[alt="Awaitsi logo"]').first();
+test.describe('Navigation & Link Verification Tests', () => {
+  test('Navbar logo links home', async ({ page }) => {
+    await page.goto('/about');
+    const logo = mainNav(page).locator('img[alt="Awaitsi logo"]');
     await expect(logo).toBeVisible({ timeout: 20000 });
     await logo.click();
-    await expect(page).toHaveURL('http://localhost:5173/');
+    await expect(page).toHaveURL(/\/$/);
   });
 
   test('Desktop nav links navigate to correct pages', async ({ page }) => {
-    const navLinks = [
-      { text: 'About', expectedPath: '/about' },
-      { text: 'Our Process', expectedPath: '/our-process' },
-      { text: 'Industries', expectedPath: '/industries' },
-      { text: 'Insights', expectedPath: '/insights' },
-      { text: 'Careers', expectedPath: '/careers' },
-      { text: 'Contact', expectedPath: '/contact' },
-    ];
+    await page.setViewportSize({ width: 1440, height: 900 });
+    const navLinks = ['/work', '/approach', '/business-cloud', '/insights', '/about'];
 
-    for (const item of navLinks) {
+    for (const path of navLinks) {
       await page.goto('/');
-      await page.waitForLoadState('networkidle');
-      // Wait for nav to render, then click by href
-      const link = page.locator(`nav a[href="${item.expectedPath}"]`).first();
+      const link = mainNav(page).locator(`a[href="${path}"]`).first();
       await expect(link).toBeVisible({ timeout: 10000 });
       await link.click();
-      await expect(page).toHaveURL(new RegExp(item.expectedPath));
+      await expect(page).toHaveURL(new RegExp(`${path}$`));
       await expect(page.locator('h1').first()).toBeVisible({ timeout: 15000 });
     }
   });
 
-  test('Services dropdown menu navigates to detail pages', async ({ page }) => {
+  test('Solutions dropdown navigates to a service pillar', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
-
-    // Hover over the Services nav link
-    await page.locator('nav a[href="/services"]').first().hover();
-    const dropdownItem = page.locator('a[href="/services/business-websites"]').first();
-    await expect(dropdownItem).toBeVisible({ timeout: 5000 });
-    await dropdownItem.click();
-    await expect(page).toHaveURL(/.*\/services\/business-websites/);
-    await expect(page.locator('h1').first()).toContainText('Business Websites', { timeout: 15000 });
+    await mainNav(page).getByRole('button', { name: 'Solutions' }).hover();
+    const item = mainNav(page).locator('a[href="/services/business-systems"]').first();
+    await expect(item).toBeVisible({ timeout: 5000 });
+    await item.click();
+    await expect(page).toHaveURL(/\/services\/business-systems/);
+    await expect(page.locator('h1').first()).toContainText('Business Systems', { timeout: 15000 });
   });
 
-  test('Case Studies dropdown menu navigates to detail pages', async ({ page }) => {
+  test('Book Digital Assessment CTA navigates to the assessment', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
-
-    await page.locator('nav a[href="/case-studies"]').first().hover();
-    const kingspathLink = page.locator('a[href="/case-studies/kingspath-transport"]').first();
-    await expect(kingspathLink).toBeVisible({ timeout: 5000 });
-    await kingspathLink.click();
-    await expect(page).toHaveURL(/.*\/case-studies\/kingspath-transport/);
-    await expect(page.locator('h1').first()).toContainText('Kingspath', { timeout: 15000 });
+    await mainNav(page).getByRole('link', { name: /Book Digital Assessment/i }).click();
+    await expect(page).toHaveURL(/\/digital-assessment/);
   });
 
   test('Footer Privacy and Terms links navigate correctly', async ({ page }) => {
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
-
-    // Footer Privacy Policy link
-    const privacyLink = page.locator('footer a[href="/privacy"]').first();
-    await privacyLink.scrollIntoViewIfNeeded();
-    await privacyLink.click();
-    await expect(page).toHaveURL(/.*\/privacy/);
-    await expect(page.locator('h1').first()).toBeVisible({ timeout: 15000 });
-
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
-
-    // Footer Terms link
-    const termsLink = page.locator('footer a[href="/terms"]').first();
-    await termsLink.scrollIntoViewIfNeeded();
-    await termsLink.click();
-    await expect(page).toHaveURL(/.*\/terms/);
-    await expect(page.locator('h1').first()).toBeVisible({ timeout: 15000 });
+    for (const path of ['/privacy', '/terms']) {
+      await page.goto('/');
+      const link = page.locator(`footer a[href="${path}"]`).first();
+      await link.scrollIntoViewIfNeeded();
+      await link.click();
+      await expect(page).toHaveURL(new RegExp(path));
+      await expect(page.locator('h1').first()).toBeVisible({ timeout: 15000 });
+    }
   });
 
-  test('Mobile hamburger menu opens and contains nav links', async ({ page }) => {
+  test('Mobile hamburger menu opens and navigates', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
 
-    const mobileBtn = page.locator('#mobile-menu-toggle-btn');
-    await expect(mobileBtn).toBeVisible({ timeout: 10000 });
-    await mobileBtn.click();
+    const toggle = page.getByRole('button', { name: 'Toggle Navigation Menu' });
+    await expect(toggle).toBeVisible({ timeout: 10000 });
+    await toggle.click();
 
-    // Mobile drawer should now be visible with nav links
-    const aboutLink = page.locator('a[href="/about"]').first();
+    const aboutLink = mainNav(page).getByRole('link', { name: 'About', exact: true });
     await expect(aboutLink).toBeVisible({ timeout: 5000 });
+    await aboutLink.click();
+    await expect(page).toHaveURL(/\/about$/);
   });
 });
