@@ -5,6 +5,7 @@ import React from 'react';
  *   ## Heading   → <h2> (with a stable id for in-page navigation)
  *   - item       → <ul><li>
  *   **bold**     → <strong>
+ *   *italic*     → <em>
  *   blank-line separated text → <p>
  */
 
@@ -38,15 +39,23 @@ export const parseArticle = (source: string): ArticleBlock[] =>
     });
 
 const renderInline = (text: string): React.ReactNode[] =>
-  text.split(/(\*\*[^*]+\*\*)/g).filter(Boolean).map((part, i) =>
-    part.startsWith('**') && part.endsWith('**') ? (
-      <strong key={i} className="font-semibold text-white">
-        {part.slice(2, -2)}
-      </strong>
-    ) : (
-      <React.Fragment key={i}>{part}</React.Fragment>
-    )
-  );
+  text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g).filter(Boolean).map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return (
+        <strong key={i} className="font-semibold text-white">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    if (part.length > 2 && part.startsWith('*') && part.endsWith('*')) {
+      return (
+        <em key={i} className="italic text-white/90">
+          {part.slice(1, -1)}
+        </em>
+      );
+    }
+    return <React.Fragment key={i}>{part}</React.Fragment>;
+  });
 
 const ArticleBody: React.FC<{ blocks: ArticleBlock[] }> = ({ blocks }) => (
   <div className="text-[1.0625rem] sm:text-lg leading-[1.8] text-white/75 font-opensans">

@@ -36,61 +36,57 @@ export interface InsightArticle {
 
 export const insights: InsightArticle[] = [
   {
-    slug: 'where-professionalism-meets-every-journey',
-    title: 'Where Professionalism Meets Every Journey',
-    seoTitle: 'Kingspath Transport: Where Professionalism Meets Every Journey',
+    slug: 'putting-kingspath-transport-on-the-road-online',
+    title: 'Case Study: Putting Kingspath Transport on the Road Online',
+    seoTitle: "Case Study: How Awaitsi Built Kingspath Transport's Website",
     description:
-      'Kingspath is a professional shuttle and executive transport service operating across South Africa, built on trust, punctuality and excellence.',
+      'How Awaitsi built Kingspath Transport a professional, mobile-first website with clear service pages, online booking and search-ready foundations.',
     excerpt:
-      'Kingspath is a professional shuttle and executive transport service operating across South Africa. Whatever the trip, we are built on three values: trust, punctuality and excellence.',
-    subject: 'Kingspath Transport',
+      'At Awaitsi, we believe a great South African SME deserves a website that works as hard as it does. Kingspath Transport is a good example. Here is how we helped them build an online presence that matches the quality of their service.',
+    subject: 'Case Study · Kingspath Transport',
     related: [
-      { label: 'Kingspath Transport case study', to: '/work/kingspath-transport' },
-      { label: 'Our work', to: '/work' },
+      { label: 'Kingspath Transport project', to: '/work/kingspath-transport' },
+      { label: 'Digital systems', to: '/services/digital-systems' },
+      { label: 'Contact Awaitsi', to: '/contact' },
     ],
     body: `
-You never really notice good transport. The car is already waiting when you land, the driver knows the route, and you get to the meeting, the venue or home without thinking about it. You only notice transport when it goes wrong: a no-show at the airport, a driver who is running late, a vehicle you would not want a client to see you step out of. Kingspath Transport exists so that you never have to worry about it.
+At Awaitsi, we believe a great South African SME deserves a website that works as hard as it does. Kingspath Transport is a good example. They are a professional shuttle and executive transport business serving clients across South Africa. Here is how we helped them build an online presence that matches the quality of their service.
 
-Kingspath is a professional shuttle and executive transport service operating across South Africa. Whatever the trip, we are built on three values: **trust, punctuality and excellence.**
+## The client
 
-## The problems we solve
+Kingspath Transport offers **airport transfers, corporate travel, event transport and private charters**. Their brand is built on three values: **trust, punctuality and excellence**. Their tagline captures it: *"Where Professionalism Meets Every Journey."*
 
-**Unreliable pickups.** Missed or late airport collections cost people flights, meetings and peace of mind. We treat punctuality as a promise, not a target.
+## The challenge
 
-**Inconsistent service.** With ad-hoc rides you never know what kind of car or driver will arrive. Kingspath delivers the same professional standard on every journey, so you can book with confidence for yourself, your team or your guests.
+In the transport business, customers decide quickly. A corporate travel manager, a wedding planner or someone booking an airport pickup will compare a few options and choose the one that looks most reliable. Kingspath had the service to win that business, but they needed a website that could:
 
-**Complicated logistics.** Moving executives, delegates or wedding guests between airports, hotels and venues takes a lot of coordination. We take that off your plate.
+- **Build trust at first glance.** Executive and corporate clients expect a polished, professional brand before they book.
+- **Explain four different services clearly**, so each type of customer immediately finds what they need.
+- **Make booking easy.** Customers should be able to request a trip online, at any time, from anywhere in the country, without phone tag.
+- **Work perfectly on mobile.** Many bookings happen on a phone, often from an airport or between meetings.
+- **Be found on Google** by people searching for shuttle and executive transport services.
 
-**Booking hassle.** You can book online, quickly and from anywhere in the country.
+## What Awaitsi built
 
-## Our services
+**A professional, brand-led design.** We built the site around Kingspath's tagline and values, with a clean, executive look that tells visitors straight away that this is a business they can trust with their clients, staff and guests.
 
-**Airport transfers.** We meet you on arrival and take you to your hotel, office or home, and we get you to the airport on time for departure. It is the stress-free way to start or end any trip.
+**Clear service pages.** Airport transfers, corporate travel, event transport and private charters are each presented clearly, so a business traveller and an event organiser can both find the right service in seconds.
 
-**Corporate travel.** We provide dependable transport for executives, visiting clients and staff. When your company's reputation is in the car with them, professionalism matters.
+**Online booking.** Customers can book transport online, making it simple to arrange a trip anywhere in South Africa and turning website visitors into confirmed bookings.
 
-**Event transport.** We move guests to and from conferences, weddings, year-end functions and special occasions, so the event runs smoothly and everyone arrives together and on time.
+**Fast and mobile-first.** The site is built to load quickly and work smoothly on any phone, tablet or desktop.
 
-**Private charters.** You can hire a vehicle and driver for your own schedule, whether that is a day of meetings, a group outing or a trip that needs flexibility.
+**Search-ready foundations.** The page structure, titles and keywords help Kingspath show up when customers search for shuttle and executive transport.
 
-## An example: a Pretoria company hosting visiting clients
+## The result
 
-Imagine a mid-sized engineering firm in Pretoria hosting a delegation of five clients for a two-day visit. (This is an illustrative scenario.) Without a transport partner, someone on the team has to juggle flight times, ride-hailing apps and directions to the site, and hope it all comes together.
+Kingspath Transport now has a modern website that reflects the professionalism of their service. It gives potential clients a reason to trust them before the first trip, explains exactly what they offer, and lets customers book in a few taps. Like every Awaitsi project, it was delivered affordably and without the complexity of a corporate agency.
 
-With Kingspath, the firm makes one booking. The delegation is collected at the airport, taken to their hotel, driven to the office and the site visit, taken to dinner, and returned to the airport for their flights home. Every pickup is on time, and every driver is professional. The visitors' first impression of the firm is a good one, and the team can stay focused on the business.
+## Is your business next?
 
-## Why choose Kingspath
+Kingspath is one of many South African SMEs that are excellent at what they do but need a digital presence to match. Whether you need a website, a custom CRM to manage your customers and bookings, or practical AI to automate follow-ups, Awaitsi builds fast, affordable solutions for growing local businesses.
 
-- **Trust:** professional drivers you can rely on with your guests, your staff and your family.
-- **Punctuality:** we plan around your schedule and arrive on time.
-- **Excellence:** a consistent, executive-level experience on every trip.
-- **Nationwide:** transport across South Africa, with easy online booking.
-
-## Book your next journey
-
-Whether it is a single airport transfer or transport for an entire event, Kingspath Transport gets you there with professionalism at every step.
-
-**Book online at kingspathtransport.co.za.**
+**See the live site at kingspathtransport.co.za, and start your project at awaitsi.co.za.**
 `,
   },
   {
